@@ -1,4 +1,4 @@
-package classes;
+package classes.user;
 
 public class User {
     private String username,
@@ -8,7 +8,7 @@ public class User {
      * Empty constructor
      */
     public User() {
-        this.username = password = firstName = lastName = "";
+        username = password = firstName = lastName = "";
     }
 
     /**

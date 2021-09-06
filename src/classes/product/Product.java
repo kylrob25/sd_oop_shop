@@ -1,4 +1,4 @@
-package classes;
+package classes.product;
 
 public class Product {
     private int id;
