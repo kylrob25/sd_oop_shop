@@ -1,10 +1,15 @@
 package classes.user.users;
 
+import classes.order.Order;
 import classes.user.User;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Customer extends User {
     private String addressLine1, addressLine2, town, postcode;
     private boolean registered;
+    private Map<Integer, Order> orders;
 
     /**
      * Empty constructor
@@ -12,6 +17,7 @@ public class Customer extends User {
     public Customer() {
         super();
         addressLine1 = addressLine2 = town = postcode = "";
+        orders = new HashMap<>();
     }
 
     /**
@@ -24,14 +30,16 @@ public class Customer extends User {
      * @param addressLine2 - Customer Adresss Line 2
      * @param town Customer Town
      * @param postcode Customer Postcode
+     * @param orders - Customer Orders
      */
     public Customer(String username, String password, String firstName, String lastName,
-                    String addressLine1, String addressLine2, String town, String postcode) {
+                    String addressLine1, String addressLine2, String town, String postcode, Map<Integer, Order> orders) {
         super(username, password, firstName, lastName);
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.town = town;
         this.postcode = postcode;
+        this.orders = orders;
     }
 
     public void setAddressLine1(String addressLine1) {
@@ -54,6 +62,10 @@ public class Customer extends User {
         this.registered = registered;
     }
 
+    public void setOrders(Map<Integer, Order> orders) {
+        this.orders = orders;
+    }
+
     public String getAddressLine1() {
         return addressLine1;
     }
@@ -72,5 +84,9 @@ public class Customer extends User {
 
     public boolean isRegistered() {
         return registered;
+    }
+
+    public Map<Integer, Order> getOrders() {
+        return orders;
     }
 }
