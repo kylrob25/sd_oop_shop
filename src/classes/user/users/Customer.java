@@ -30,15 +30,17 @@ public class Customer extends User {
      * @param addressLine2 - Customer Adresss Line 2
      * @param town Customer Town
      * @param postcode Customer Postcode
+     * @param registered Is the customer registered
      * @param orders - Customer Orders
      */
     public Customer(String username, String password, String firstName, String lastName,
-                    String addressLine1, String addressLine2, String town, String postcode, Map<Integer, Order> orders) {
+                    String addressLine1, String addressLine2, String town, String postcode, boolean registered, Map<Integer, Order> orders) {
         super(username, password, firstName, lastName);
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.town = town;
         this.postcode = postcode;
+        this.registered = registered;
         this.orders = orders;
     }
 
