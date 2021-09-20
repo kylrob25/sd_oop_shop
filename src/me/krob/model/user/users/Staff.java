@@ -1,6 +1,6 @@
-package model.user.users;
+package me.krob.model.user.users;
 
-import model.user.User;
+import me.krob.model.user.User;
 
 public class Staff extends User {
     private String position;

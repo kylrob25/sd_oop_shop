@@ -1,7 +1,7 @@
-package model.user.users;
+package me.krob.model.user.users;
 
-import model.order.Order;
-import model.user.User;
+import me.krob.model.order.Order;
+import me.krob.model.user.User;
 
 import java.util.HashMap;
 import java.util.Map;

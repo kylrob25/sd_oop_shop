@@ -1,6 +1,6 @@
-package model.order;
+package me.krob.model.order;
 
-import model.product.Product;
+import me.krob.model.product.Product;
 
 public class OrderLine {
     private int id;

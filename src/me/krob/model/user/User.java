@@ -1,4 +1,4 @@
-package model.user;
+package me.krob.model.user;
 
 public class User {
     private String username,

@@ -1,4 +1,4 @@
-package model.order;
+package me.krob.model.order;
 
 import java.util.Date;
 import java.util.HashMap;

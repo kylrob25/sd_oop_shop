@@ -1,4 +1,4 @@
-package model.product;
+package me.krob.model.product;
 
 public class Product {
     private int id;

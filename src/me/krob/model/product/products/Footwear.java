@@ -1,6 +1,6 @@
-package model.product.products;
+package me.krob.model.product.products;
 
-import model.product.Product;
+import me.krob.model.product.Product;
 
 public class Footwear extends Product {
     private int size;

@@ -19,5 +19,5 @@ if exist "%LOCAL_HOME_JAVA%\bin\java.exe" (
 
 SET CLASSPATH="%UCANACCESS_HOME%\lib\hsqldb.jar;%UCANACCESS_HOME%\lib\jackcess-2.0.8.jar;%UCANACCESS_HOME%\lib\commons-lang-2.6.jar;%UCANACCESS_HOME%\lib\commons-logging-1.1.1.jar;%UCANACCESS_HOME%\ucanaccess-2.0.9.3.jar"
 
-"%LOCAL_JAVA%" -classpath %CLASSPATH% net.ucanaccess.console.Main
+"%LOCAL_JAVA%" -classpath %CLASSPATH% net.ucanaccess.console.me.krob.Main
 pause
