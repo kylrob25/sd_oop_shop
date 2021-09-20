@@ -1,6 +1,6 @@
-package classes.order;
+package model.order;
 
-import classes.product.Product;
+import model.product.Product;
 
 public class OrderLine {
     private int id;

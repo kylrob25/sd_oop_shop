@@ -1,6 +1,6 @@
-package classes.product.products;
+package model.product.products;
 
-import classes.product.Product;
+import model.product.Product;
 
 public class Footwear extends Product {
     private int size;

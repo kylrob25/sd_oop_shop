@@ -1,7 +1,7 @@
-package classes.user.users;
+package model.user.users;
 
-import classes.order.Order;
-import classes.user.User;
+import model.order.Order;
+import model.user.User;
 
 import java.util.HashMap;
 import java.util.Map;

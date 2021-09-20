@@ -1,4 +1,4 @@
-package classes.order;
+package model.order;
 
 import java.util.Date;
 import java.util.HashMap;

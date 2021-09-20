@@ -1,6 +1,6 @@
-package classes.user.users;
+package model.user.users;
 
-import classes.user.User;
+import model.user.User;
 
 public class Staff extends User {
     private String position;
