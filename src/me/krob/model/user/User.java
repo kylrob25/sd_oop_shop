@@ -1,6 +1,8 @@
 package me.krob.model.user;
 
-public class User {
+public abstract class User {
+    private static final String GREETING = "<html> Hello %s<br>You are logged in as a %s</html>";
+
     private String username,
             password, firstName, lastName;
 
@@ -56,4 +58,10 @@ public class User {
     public String getLastName() {
         return lastName;
     }
+
+    public String getDisplayGreeting(String userType) {
+        return String.format(GREETING, getFirstName(), userType);
+    }
+
+    public abstract String getDisplayGreeting();
 }

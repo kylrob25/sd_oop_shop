@@ -45,4 +45,8 @@ public class Staff extends User {
     public double getSalary() {
         return salary;
     }
+
+    public String getDisplayGreeting() {
+        return super.getDisplayGreeting(position);
+    }
 }

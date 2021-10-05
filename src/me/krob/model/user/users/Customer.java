@@ -90,4 +90,8 @@ public class Customer extends User {
     public Map<Integer, Order> getOrders() {
         return orders;
     }
+
+    public String getDisplayGreeting() {
+        return super.getDisplayGreeting("Customer");
+    }
 }

@@ -1,19 +1,21 @@
 package me.krob.storage;
 
 import me.krob.storage.dao.CustomerDAO;
+import me.krob.storage.dao.StaffDAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DBManager {
+public class DatabaseManager {
     private static final String DRIVER = "net.ucanaccess.jdbc.UcanaccessDriver";
     private static final String CONNECTION = "jdbc:ucanaccess://data/ShopDB.accdb";
 
     private final CustomerDAO customerDAO = new CustomerDAO(this);
+    private final StaffDAO staffDAO = new StaffDAO(this);
 
     /**
-     * Loading the Driver
+     * Loading UCanAccess Driver
      */
     public void loadDriver() {
         try {
@@ -26,11 +28,35 @@ public class DBManager {
     }
 
     /**
+     * Loading DAOs
+     */
+    public void loadDAO() {
+        customerDAO.load();
+        staffDAO.load();
+    }
+
+    /**
      * Fetching a new connection
      * @return - the connection
      * @throws SQLException
      */
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(CONNECTION);
+    }
+
+    /**
+     * Customer DAO
+     * @return - the customer dao
+     */
+    public CustomerDAO getCustomerDAO() {
+        return customerDAO;
+    }
+
+    /**
+     * Staff DAO
+     * @return - the staff dao
+     */
+    public StaffDAO getStaffDAO() {
+        return staffDAO;
     }
 }

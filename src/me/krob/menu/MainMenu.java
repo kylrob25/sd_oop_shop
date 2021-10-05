@@ -23,9 +23,16 @@ public class MainMenu extends JFrame {
         setResizable(false);
         pack();
 
+        // Show customer login menu
         customerLoginButton.addActionListener(e -> {
             this.setVisible(false);
             main.getCustomerLoginMenu().setVisible(true);
+        });
+
+        // Show staff login menu
+        staffLogin.addActionListener(e -> {
+            this.setVisible(false);
+            main.getStaffLoginMenu().setVisible(true);
         });
     }
 }

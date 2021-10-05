@@ -1,6 +1,7 @@
 package me.krob.menu;
 
 import me.krob.Main;
+import me.krob.model.user.users.Staff;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,8 +13,7 @@ public class StaffLoginMenu extends JFrame{
     private JButton mainMenuButton;
     private JButton loginButton;
     private JTextField usernameField;
-    private JTextField textField2;
-    private JLabel passwordField;
+    private JPasswordField passwordField;
 
     public StaffLoginMenu(Main main) {
         super("Staff Login");
@@ -28,6 +28,32 @@ public class StaffLoginMenu extends JFrame{
         mainMenuButton.addActionListener(e -> {
             this.setVisible(false);
             main.getMainMenu().setVisible(true);
+        });
+
+        loginButton.addActionListener(e -> {
+            String username = usernameField.getText();
+            String password = new String(passwordField.getPassword());
+
+            Staff staff = main.getDbManager().getStaffDAO().get(username);
+
+            // Couldn't find a staff member with the provided username
+            if (staff == null) {
+                JOptionPane.showMessageDialog(null, "Invalid username...");
+                usernameField.setText(null);
+                passwordField.setText(null);
+                return;
+            }
+
+            // Passwords do not match
+            if (!password.equals(staff.getPassword())) {
+                JOptionPane.showMessageDialog(null, "Incorrect password...");
+                passwordField.setText(null);
+                return;
+            }
+
+            // Showing staff home menu
+            setVisible(false);
+            main.getStaffHomeMenu().setVisible(true);
         });
     }
 }
