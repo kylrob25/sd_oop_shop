@@ -22,5 +22,10 @@ public class StaffHomeMenu extends JFrame {
         setPreferredSize(new Dimension(500, 250));
         setResizable(false);
         pack();
+
+        logoutButton.addActionListener(e -> {
+            dispose();
+            main.getMainMenu().setVisible(true);
+        });
     }
 }

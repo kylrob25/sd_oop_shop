@@ -26,7 +26,12 @@ public class StaffLoginMenu extends JFrame{
         pack();
 
         mainMenuButton.addActionListener(e -> {
-            this.setVisible(false);
+            // Cleaning up this menu
+            passwordField.setText(null);
+            usernameField.setText(null);
+            dispose();
+
+            // Showing main menu
             main.getMainMenu().setVisible(true);
         });
 
@@ -51,8 +56,12 @@ public class StaffLoginMenu extends JFrame{
                 return;
             }
 
+            // Cleaning up this menu
+            passwordField.setText(null);
+            usernameField.setText(null);
+            dispose();
+
             // Showing staff home menu
-            setVisible(false);
             main.getStaffHomeMenu().setVisible(true);
         });
     }

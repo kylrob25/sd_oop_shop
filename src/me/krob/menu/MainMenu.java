@@ -25,13 +25,13 @@ public class MainMenu extends JFrame {
 
         // Show customer login menu
         customerLoginButton.addActionListener(e -> {
-            this.setVisible(false);
+            dispose();
             main.getCustomerLoginMenu().setVisible(true);
         });
 
         // Show staff login menu
         staffLogin.addActionListener(e -> {
-            this.setVisible(false);
+            dispose();
             main.getStaffLoginMenu().setVisible(true);
         });
     }
