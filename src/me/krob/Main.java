@@ -1,8 +1,7 @@
 package me.krob;
 
-import me.krob.container.UserContainer;
+import me.krob.session.UserSession;
 import me.krob.menu.*;
-import me.krob.model.user.User;
 import me.krob.storage.DatabaseManager;
 
 public class Main {
@@ -11,7 +10,7 @@ public class Main {
     }
 
     private final DatabaseManager databaseManager;
-    private final UserContainer userContainer;
+    private final UserSession userSession;
 
     private final MainMenu mainMenu;
     private final CustomerLoginMenu customerLoginMenu;
@@ -25,7 +24,7 @@ public class Main {
         databaseManager.loadDriver();
         databaseManager.loadDAO();
 
-        userContainer = new UserContainer();
+        userSession = new UserSession();
 
         mainMenu = new MainMenu(this);
         mainMenu.setVisible(true);
@@ -37,8 +36,8 @@ public class Main {
         browseProductsMenu = new BrowseProductsMenu(this);
     }
 
-    public UserContainer getUserContainer() {
-        return userContainer;
+    public UserSession getUserContainer() {
+        return userSession;
     }
 
     public DatabaseManager getDatabaseManager() {

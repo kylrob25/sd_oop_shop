@@ -1,8 +1,8 @@
-package me.krob.container;
+package me.krob.session;
 
 import me.krob.model.user.User;
 
-public class UserContainer {
+public class UserSession {
     private User user;
 
     public void setUser(User user) {

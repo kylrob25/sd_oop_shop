@@ -49,26 +49,32 @@ public class BrowseProductsMenu extends JFrame {
         setResizable(false);
         pack();
 
+        // Setting the category model
         categoryList.setModel(CATEGORY_MODEL);
 
         backButton.addActionListener(e -> {
             // Hiding menu
             dispose();
-
             // Showing customer home menu
             main.getCustomerHomeMenu().setVisible(true);
         });
 
         categoryList.addListSelectionListener(e -> {
+            // Selected category
             int index = categoryList.getSelectedIndex();
+            // Updating model based on the selected category
             productsList.setModel(getProductListModel(index));
         });
     }
 
     public ListModel<String> getProductListModel(int index) {
-        List<String> products = main.getDatabaseManager().getProductDAO().getValues().stream().filter(product -> {
-            return index == 0 ? product instanceof Clothing : index == 1 && product instanceof Footwear;
-        }).map(Product::getName).collect(Collectors.toList());
+        /**
+         * We are collection the products and filtering out the products that come under
+         * the selected category, then we are using the product names to map the list.
+         */
+        List<String> products = main.getDatabaseManager().getProductDAO().getValues().stream()
+                .filter(product -> index == 0 ? product instanceof Clothing : index == 1 && product instanceof Footwear)
+                .map(Product::getName).collect(Collectors.toList());
 
         return new AbstractListModel<String>() {
             public int getSize() {
