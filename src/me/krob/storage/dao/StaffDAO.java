@@ -34,6 +34,7 @@ public class StaffDAO extends DAO<String, Staff> {
                     // Creating and storing a new staff member in our data map
                     Staff staff = new Staff(username, password, firstName, lastName, position, salary);
                     dataMap.put(username, staff);
+                    System.out.println(username + " " + password);
                 }
             }
         } catch (SQLException exception) {

@@ -63,7 +63,7 @@ public class CustomerLoginMenu extends JFrame {
             dispose();
 
             // Showing customer home menu
-            main.getCustomerHomeMenu().setVisible(true);
+            main.getCustomerHomeMenu().login(customer);
         });
     }
 }

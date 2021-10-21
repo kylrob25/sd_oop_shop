@@ -62,7 +62,8 @@ public class StaffLoginMenu extends JFrame{
             dispose();
 
             // Showing staff home menu
-            main.getStaffHomeMenu().setVisible(true);
+            // Showing customer home menu
+            main.getStaffHomeMenu().login(staff);
         });
     }
 }
