@@ -1,5 +1,6 @@
 package me.krob.storage;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,5 +19,9 @@ public abstract class DAO<K, V> {
 
     public V get(K key) {
         return dataMap.get(key);
+    }
+
+    public Collection<V> getValues() {
+        return dataMap.values();
     }
 }

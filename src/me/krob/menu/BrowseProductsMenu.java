@@ -1,11 +1,32 @@
 package me.krob.menu;
 
 import me.krob.Main;
+import me.krob.model.product.Product;
+import me.krob.model.product.products.Clothing;
+import me.krob.model.product.products.Footwear;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BrowseProductsMenu extends JFrame {
+    private static final ListModel<String> CATEGORY_MODEL = new AbstractListModel<String>() {
+        public int getSize() {
+            return 2;
+        }
+
+        public String getElementAt(int index) {
+            switch (index) {
+                case 0:
+                    return "Footwear";
+                case 1:
+                    return "Clothing";
+            }
+            return null;
+        }
+    };
+
     private final Main main;
 
     private JPanel mainPanel;
@@ -14,8 +35,9 @@ public class BrowseProductsMenu extends JFrame {
     private JButton addToBasketButton;
     private JButton viewBasketButton;
     private JButton backButton;
-    private JList categoryList;
-    private JList productsList;
+    private JList<String> categoryList;
+    private JList<String> productsList;
+    private JTextField quantityField;
 
     public BrowseProductsMenu(Main main) {
         super("Browse Products");
@@ -27,6 +49,8 @@ public class BrowseProductsMenu extends JFrame {
         setResizable(false);
         pack();
 
+        categoryList.setModel(CATEGORY_MODEL);
+
         backButton.addActionListener(e -> {
             // Hiding menu
             dispose();
@@ -34,5 +58,26 @@ public class BrowseProductsMenu extends JFrame {
             // Showing customer home menu
             main.getCustomerHomeMenu().setVisible(true);
         });
+
+        categoryList.addListSelectionListener(e -> {
+            int index = categoryList.getSelectedIndex();
+            productsList.setModel(getProductListModel(index));
+        });
+    }
+
+    public ListModel<String> getProductListModel(int index) {
+        List<String> products = main.getDatabaseManager().getProductDAO().getValues().stream().filter(product -> {
+            return index == 0 ? product instanceof Clothing : index == 1 && product instanceof Footwear;
+        }).map(Product::getName).collect(Collectors.toList());
+
+        return new AbstractListModel<String>() {
+            public int getSize() {
+                return products.size();
+            }
+
+            public String getElementAt(int index) {
+                return products.get(index);
+            }
+        };
     }
 }

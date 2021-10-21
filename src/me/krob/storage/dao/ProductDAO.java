@@ -1,10 +1,8 @@
 package me.krob.storage.dao;
 
-import javafx.animation.Animation;
 import me.krob.model.product.Product;
 import me.krob.model.product.products.Clothing;
 import me.krob.model.product.products.Footwear;
-import me.krob.model.user.users.Customer;
 import me.krob.storage.DAO;
 import me.krob.storage.DatabaseManager;
 

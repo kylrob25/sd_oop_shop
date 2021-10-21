@@ -40,7 +40,7 @@ public class CustomerLoginMenu extends JFrame {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
 
-            Customer customer = main.getDbManager().getCustomerDAO().get(username);
+            Customer customer = main.getDatabaseManager().getCustomerDAO().get(username);
 
             // Couldn't find a customer with the provided username
             if (customer == null) {

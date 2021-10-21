@@ -39,7 +39,7 @@ public class StaffLoginMenu extends JFrame{
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
 
-            Staff staff = main.getDbManager().getStaffDAO().get(username);
+            Staff staff = main.getDatabaseManager().getStaffDAO().get(username);
 
             // Couldn't find a staff member with the provided username
             if (staff == null) {

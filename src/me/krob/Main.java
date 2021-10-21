@@ -41,7 +41,7 @@ public class Main {
         return userContainer;
     }
 
-    public DatabaseManager getDbManager() {
+    public DatabaseManager getDatabaseManager() {
         return databaseManager;
     }
 
