@@ -9,8 +9,6 @@ import java.awt.*;
 public abstract class UserMenu<U extends User> extends JFrame {
     private final Main main;
 
-    private U user;
-
     public UserMenu(String title, Main main) {
         super(title);
         this.main = main;
@@ -23,7 +21,7 @@ public abstract class UserMenu<U extends User> extends JFrame {
 
     public void login(U user) {
         // Setting user
-        this.user = user;
+        main.getUserContainer().setUser(user);
         // Setting label
         setGreetingText(user.getDisplayGreeting());
         // Showing menu
@@ -32,7 +30,7 @@ public abstract class UserMenu<U extends User> extends JFrame {
 
     public void logout() {
         // Nulling user
-        user = null;
+        main.getUserContainer().setUser(null);
         // Clearing label
         setGreetingText(null);
         // Hiding menu

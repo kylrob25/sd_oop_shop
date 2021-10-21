@@ -16,7 +16,15 @@ public class CustomerHomeMenu extends UserMenu<Customer> {
     public CustomerHomeMenu(Main main) {
         super("Customer Home", main);
         setContentPane(mainPanel);
+
         logoutButton.addActionListener(e -> logout());
+
+        browseProductsButton.addActionListener(e -> {
+            // Hide menu
+            dispose();
+            // Show browse products menu
+            main.getBrowseProductsMenu().setVisible(true);
+        });
     }
 
     public void setGreetingText(String text) {
