@@ -5,23 +5,15 @@ import me.krob.Main;
 import javax.swing.*;
 import java.awt.*;
 
-public class MainMenu extends JFrame {
-    private final Main main;
-
+public class MainMenu extends Menu {
     private JButton customerLoginButton;
     private JButton staffLogin;
     private JButton viewProductsButton;
     private JPanel mainPanel;
 
     public MainMenu(Main main) {
-        super("Main Menu");
-        this.main = main;
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        super("Main Menu", main);
         setContentPane(mainPanel);
-        setPreferredSize(new Dimension(300, 200));
-        setResizable(false);
-        pack();
 
         // Show customer login menu
         customerLoginButton.addActionListener(e -> {
@@ -33,6 +25,12 @@ public class MainMenu extends JFrame {
         staffLogin.addActionListener(e -> {
             dispose();
             main.getStaffLoginMenu().setVisible(true);
+        });
+
+        // Show products menu
+        viewProductsButton.addActionListener(e -> {
+            dispose();
+            main.getBrowseProductsMenu().view();
         });
     }
 }

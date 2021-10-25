@@ -3,25 +3,14 @@ package me.krob.menu;
 import me.krob.Main;
 import me.krob.model.user.User;
 
-import javax.swing.*;
-import java.awt.*;
-
-public abstract class UserMenu<U extends User> extends JFrame {
-    private final Main main;
-
-    public UserMenu(String title, Main main) {
-        super(title);
-        this.main = main;
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(500, 250));
-        setResizable(false);
-        pack();
+public abstract class HomeMenu extends Menu {
+    public HomeMenu(String title, Main main) {
+        super(title, main);
     }
 
-    public void login(U user) {
+    public void login(User user) {
         // Setting user
-        main.getUserContainer().setUser(user);
+        main.getUserSession().setUser(user);
         // Setting label
         setGreetingText(user.getDisplayGreeting());
         // Showing menu
@@ -30,7 +19,7 @@ public abstract class UserMenu<U extends User> extends JFrame {
 
     public void logout() {
         // Nulling user
-        main.getUserContainer().setUser(null);
+        main.getUserSession().setUser(null);
         // Clearing label
         setGreetingText(null);
         // Hiding menu
@@ -38,5 +27,6 @@ public abstract class UserMenu<U extends User> extends JFrame {
         // Showing Main menu
         main.getMainMenu().setVisible(true);
     }
+
     public abstract void setGreetingText(String text);
 }

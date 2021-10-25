@@ -53,6 +53,7 @@ public class CustomerLoginMenu extends JFrame {
             // Passwords do not match
             if (!password.equals(customer.getPassword())) {
                 JOptionPane.showMessageDialog(null, "Incorrect password...");
+                passwordField.setText(null);
                 usernameField.setText(null);
                 return;
             }

@@ -37,9 +37,9 @@ public class ProductDAO extends DAO<Integer, Product> {
 
                     // Checking whether our product is a piece of clothing or footwear
                     if (measurement == null || measurement.isEmpty()) {
-                        product = new Clothing(productId, productName, price, stockLevel, measurement);
-                    } else {
                         product = new Footwear(productId, productName, price, stockLevel, size);
+                    } else {
+                        product = new Clothing(productId, productName, price, stockLevel, measurement);
                     }
 
                     // Storing our product in the data map

@@ -2,31 +2,12 @@ package me.krob.menu;
 
 import me.krob.Main;
 import me.krob.model.product.Product;
-import me.krob.model.product.products.Clothing;
-import me.krob.model.product.products.Footwear;
+import me.krob.session.UserSession;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class BrowseProductsMenu extends JFrame {
-    private static final ListModel<String> CATEGORY_MODEL = new AbstractListModel<String>() {
-        public int getSize() {
-            return 2;
-        }
-
-        public String getElementAt(int index) {
-            switch (index) {
-                case 0:
-                    return "Footwear";
-                case 1:
-                    return "Clothing";
-            }
-            return null;
-        }
-    };
-
     private final Main main;
 
     private JPanel mainPanel;
@@ -36,8 +17,9 @@ public class BrowseProductsMenu extends JFrame {
     private JButton viewBasketButton;
     private JButton backButton;
     private JList<String> categoryList;
-    private JList<String> productsList;
-    private JTextField quantityField;
+    private JList<Product> productsList;
+    private JSpinner quantityField;
+    private JLabel quantityText;
 
     public BrowseProductsMenu(Main main) {
         super("Browse Products");
@@ -50,40 +32,95 @@ public class BrowseProductsMenu extends JFrame {
         pack();
 
         // Setting the category model
-        categoryList.setModel(CATEGORY_MODEL);
+        categoryList.setModel(main.getModelUtil().getCategoryListModel());
+
+        // Setting the default selected value
+        categoryList.setSelectedIndex(0);
+
+        // Setting default product model
+        productsList.setModel(new DefaultListModel<>());
+
+        // Initially updating the product model
+        updateProductListModel();
+
+        // Setting the default selected product
+        productsList.setSelectedIndex(0);
 
         backButton.addActionListener(e -> {
             // Hiding menu
             dispose();
-            // Showing customer home menu
-            main.getCustomerHomeMenu().setVisible(true);
+
+            // Showing a menu depending on if they are logged in or not
+            UserSession session = main.getUserSession();
+            if (session.isActive()) {
+                main.getCustomerHomeMenu().setVisible(true);
+            } else {
+                main.getMainMenu().setVisible(true);
+            }
         });
 
         categoryList.addListSelectionListener(e -> {
             // Selected category
             int index = categoryList.getSelectedIndex();
             // Updating model based on the selected category
-            productsList.setModel(getProductListModel(index));
+            updateProductListModel();
+            // Setting the default selected product
+            productsList.setSelectedIndex(0);
+        });
+
+        productsList.addListSelectionListener(e -> {
+            // Resetting spinner when we click a new item
+            quantityField.setValue(0);
+        });
+
+        quantityField.addChangeListener(e -> {
+            Product product = productsList.getSelectedValue();
+
+            int next = (int) quantityField.getNextValue();
+            int previous = (int) quantityField.getPreviousValue();
+
+            // Making sure the value cannot be below 0
+            if (product == null || (next < 0 || previous < 0)) {
+                quantityField.setValue(0);
+                return;
+            }
+
+            int stockLevel = product.getStockLevel();
+
+            // Making sure the value cannot be larger than the available stock
+            if (next > stockLevel) {
+                quantityField.setValue(stockLevel);
+            }
+        });
+
+        addToBasketButton.addActionListener(e -> {
+            // This should never run as we always set default selected value
+            if (productsList.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Please select a product!");
+                return;
+            }
+
+            Product product = productsList.getSelectedValue();
+            int quantity = (int) quantityField.getValue();
         });
     }
 
-    public ListModel<String> getProductListModel(int index) {
-        /**
-         * We are collection the products and filtering out the products that come under
-         * the selected category, then we are using the product names to map the list.
-         */
-        List<String> products = main.getDatabaseManager().getProductDAO().getValues().stream()
-                .filter(product -> index == 0 ? product instanceof Clothing : index == 1 && product instanceof Footwear)
-                .map(Product::getName).collect(Collectors.toList());
+    public void updateProductListModel() {
+        main.getModelUtil().updateProductListModel(
+                (DefaultListModel<Product>) productsList.getModel(),
+                categoryList.getSelectedValue()
+        );
+    }
 
-        return new AbstractListModel<String>() {
-            public int getSize() {
-                return products.size();
-            }
+    public void view() {
+        setVisible(true);
 
-            public String getElementAt(int index) {
-                return products.get(index);
-            }
-        };
+        UserSession session = main.getUserSession();
+        boolean active = session.isActive();
+
+        addToBasketButton.setVisible(active);
+        viewBasketButton.setVisible(active);
+        quantityField.setVisible(active);
+        quantityText.setVisible(active);
     }
 }

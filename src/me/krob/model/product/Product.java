@@ -69,4 +69,9 @@ public class Product {
     public int getStockLevel() {
         return stockLevel;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

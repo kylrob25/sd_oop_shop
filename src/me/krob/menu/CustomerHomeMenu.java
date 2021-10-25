@@ -1,12 +1,10 @@
 package me.krob.menu;
 
 import me.krob.Main;
-import me.krob.model.user.users.Customer;
 
 import javax.swing.*;
-import java.awt.*;
 
-public class CustomerHomeMenu extends UserMenu<Customer> {
+public class CustomerHomeMenu extends HomeMenu {
     private JPanel mainPanel;
     private JButton browseProductsButton;
     private JButton viewOrdersButton;
@@ -23,7 +21,7 @@ public class CustomerHomeMenu extends UserMenu<Customer> {
             // Hide menu
             dispose();
             // Show browse products menu
-            main.getBrowseProductsMenu().setVisible(true);
+            main.getBrowseProductsMenu().view();
         });
     }
 

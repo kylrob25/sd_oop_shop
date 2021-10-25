@@ -8,4 +8,8 @@ public class UserSession {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public boolean isActive() {
+        return user != null;
+    }
 }
