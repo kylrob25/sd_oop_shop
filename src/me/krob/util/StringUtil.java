@@ -1,14 +1,12 @@
 package me.krob.util;
 
-import java.util.regex.Pattern;
-
 public class StringUtil {
     // Postcode Regex - https://howtodoinjava.com/java/regex/uk-postcode-validation/
     private static final String REGEX = "^[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}$";
-    private static final Pattern PATTERN = Pattern.compile(REGEX);
 
-    // Password regex
+    // Ensuring there is a digit between 0 and 9
     private static final String DIGIT_REGEX = "(?=.*[0-9]).*";
+    // Ensuring there is an uppercase letter between A and Z
     private static final String UPPERCASE_REGEX = "(?=.*[A-Z]).*";
 
     /**
@@ -26,7 +24,7 @@ public class StringUtil {
      * @return - is the postcode valid
      */
     public static boolean isValidPostCode(String postcode) {
-        return PATTERN.matcher(postcode).matches();
+        return postcode.matches(REGEX);
     }
 
     /**
