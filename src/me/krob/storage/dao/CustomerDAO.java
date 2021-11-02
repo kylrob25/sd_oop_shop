@@ -14,7 +14,6 @@ public class CustomerDAO extends DAO<String, Customer> {
         super(manager, "customers");
     }
 
-
     /**
      * Filling our data map
      */
@@ -43,5 +42,38 @@ public class CustomerDAO extends DAO<String, Customer> {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
+    }
+
+    /**
+     * Insert a customer into the database
+     * @param customer - the customer to be stored
+     * @return - whether the customer was stored or not
+     */
+    public boolean insert(Customer customer) {
+        try (Connection connection = manager.getConnection();
+             PreparedStatement statement = connection.prepareStatement("INSERT INTO " + tableName +
+                     " (Username, Password, FirstName, LastName, AddressLine1, AddressLine2, Town, PostCode) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
+            String username = customer.getUsername();
+
+            statement.setString(1, username);
+            statement.setString(2, customer.getPassword());
+            statement.setString(3, customer.getFirstName());
+            statement.setString(4, customer.getLastName());
+            statement.setString(5, customer.getAddressLine1());
+            statement.setString(6, customer.getAddressLine2());
+            statement.setString(7, customer.getTown());
+            statement.setString(8, customer.getPostcode());
+
+            if (!statement.execute()) {
+                dataMap.put(username, customer);
+                return true;
+            }
+
+            return false;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        return false;
     }
 }

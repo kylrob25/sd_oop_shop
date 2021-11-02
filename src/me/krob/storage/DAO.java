@@ -17,6 +17,8 @@ public abstract class DAO<K, V> {
 
     public abstract void load();
 
+    public abstract boolean insert(V value);
+
     public V get(K key) {
         return dataMap.get(key);
     }

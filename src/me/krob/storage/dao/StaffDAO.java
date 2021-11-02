@@ -41,4 +41,8 @@ public class StaffDAO extends DAO<String, Staff> {
             exception.printStackTrace();
         }
     }
+
+    public boolean insert(Staff value) {
+        return false;
+    }
 }

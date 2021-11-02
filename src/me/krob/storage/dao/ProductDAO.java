@@ -50,4 +50,8 @@ public class ProductDAO extends DAO<Integer, Product> {
             exception.printStackTrace();
         }
     }
+
+    public boolean insert(Product value) {
+        return false;
+    }
 }

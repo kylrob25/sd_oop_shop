@@ -21,6 +21,7 @@ public class Main {
     private final StaffHomeMenu staffHomeMenu;
     private final BrowseProductsMenu browseProductsMenu;
     private final ModifyProductsMenu modifyProductsMenu;
+    private final RegistrationMenu registrationMenu;
 
     public Main() {
         modelUtil = new ModelUtil(this);
@@ -40,6 +41,7 @@ public class Main {
         staffHomeMenu = new StaffHomeMenu(this);
         browseProductsMenu = new BrowseProductsMenu(this);
         modifyProductsMenu = new ModifyProductsMenu(this);
+        registrationMenu = new RegistrationMenu(this);
     }
 
     public UserSession getUserSession() {
@@ -80,5 +82,9 @@ public class Main {
 
     public ModifyProductsMenu getModifyProductsMenu() {
         return modifyProductsMenu;
+    }
+
+    public RegistrationMenu getRegistrationMenu() {
+        return registrationMenu;
     }
 }

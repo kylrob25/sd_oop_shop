@@ -6,9 +6,7 @@ import me.krob.model.user.users.Customer;
 import javax.swing.*;
 import java.awt.*;
 
-public class CustomerLoginMenu extends JFrame {
-    private final Main main;
-
+public class CustomerLoginMenu extends Menu {
     private JPanel mainPanel;
     private JButton loginButton;
     private JButton registerButton;
@@ -17,14 +15,8 @@ public class CustomerLoginMenu extends JFrame {
     private JTextField usernameField;
 
     public CustomerLoginMenu(Main main) {
-        super("Customer Login");
-        this.main = main;
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        super("Customer Login", main);
         setContentPane(mainPanel);
-        setPreferredSize(new Dimension(500, 250));
-        setResizable(false);
-        pack();
 
         mainMenuButton.addActionListener(e -> {
             // Cleaning up this menu
@@ -65,6 +57,16 @@ public class CustomerLoginMenu extends JFrame {
 
             // Showing customer home menu
             main.getCustomerHomeMenu().login(customer);
+        });
+
+        registerButton.addActionListener(e -> {
+            // Cleaning up this menu
+            passwordField.setText(null);
+            usernameField.setText(null);
+            dispose();
+
+            // Showing registration menu
+            main.getRegistrationMenu().setVisible(true);
         });
     }
 }
