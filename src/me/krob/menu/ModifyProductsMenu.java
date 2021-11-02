@@ -49,6 +49,15 @@ public class ModifyProductsMenu extends Menu {
             // Setting the default selected product
             productsList.setSelectedIndex(0);
         });
+
+        editButton.addActionListener(e -> {
+            // Hiding this menu
+            dispose();
+
+            // Showing edit product menu
+            Product product = productsList.getSelectedValue();
+            main.getEditProductMenu().view(product);
+        });
     }
 
     public void updateProductListModel() {

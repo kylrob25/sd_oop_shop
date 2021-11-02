@@ -135,6 +135,6 @@ public class RegistrationMenu extends Menu {
                 lastNameField, addressLine1Field,
                 addressLine2Field, townField,
                 postCodeField
-        ).forEach(jTextField -> jTextField.setText(null));
+        ).forEach(field -> field.setText(null));
     }
 }
