@@ -99,6 +99,6 @@ public class EditProductMenu extends Menu {
         // Clearing spinner fields
         Arrays.asList(
                 idField, stockField
-        ).forEach(field -> field.setValue(null));
+        ).forEach(field -> field.setValue(0));
     }
 }
