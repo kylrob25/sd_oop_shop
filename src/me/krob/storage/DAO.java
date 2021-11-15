@@ -8,16 +8,16 @@ public abstract class DAO<K, V> {
     protected final Map<K, V> dataMap = new HashMap<>();
 
     protected final DatabaseManager manager;
-    protected final String tableName;
 
-    public DAO(DatabaseManager manager, String tableName) {
+    public DAO(DatabaseManager manager) {
         this.manager = manager;
-        this.tableName = tableName;
     }
 
     public abstract void load();
 
     public abstract boolean insert(V value);
+
+    public abstract boolean modify(V value, String field, Object obj);
 
     public V get(K key) {
         return dataMap.get(key);

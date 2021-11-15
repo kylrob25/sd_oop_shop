@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class StaffDAO extends DAO<String, Staff> {
     public StaffDAO(DatabaseManager manager) {
-        super(manager, "staff");
+        super(manager);
     }
 
     /**
@@ -20,7 +20,7 @@ public class StaffDAO extends DAO<String, Staff> {
     public void load() {
         // Auto-closing our connection by using a try statement
         try (Connection connection = manager.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + tableName)) {
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Staff")) {
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
@@ -43,6 +43,10 @@ public class StaffDAO extends DAO<String, Staff> {
     }
 
     public boolean insert(Staff value) {
+        return false;
+    }
+
+    public boolean modify(Staff staff, String field, Object obj) {
         return false;
     }
 }

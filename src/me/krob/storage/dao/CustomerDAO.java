@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class CustomerDAO extends DAO<String, Customer> {
     public CustomerDAO(DatabaseManager manager) {
-        super(manager, "customers");
+        super(manager);
     }
 
     /**
@@ -20,7 +20,7 @@ public class CustomerDAO extends DAO<String, Customer> {
     public void load() {
         // Auto-closing our connection by using a try statement
         try (Connection connection = manager.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + tableName)) {
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Customers")) {
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
@@ -51,7 +51,7 @@ public class CustomerDAO extends DAO<String, Customer> {
      */
     public boolean insert(Customer customer) {
         try (Connection connection = manager.getConnection();
-             PreparedStatement statement = connection.prepareStatement("INSERT INTO " + tableName +
+             PreparedStatement statement = connection.prepareStatement("INSERT INTO Customers" +
                      " (Username, Password, FirstName, LastName, AddressLine1, AddressLine2, Town, PostCode) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
             String username = customer.getUsername();
 
@@ -74,6 +74,10 @@ public class CustomerDAO extends DAO<String, Customer> {
             exception.printStackTrace();
         }
 
+        return false;
+    }
+
+    public boolean modify(Customer customer, String field, Object obj) {
         return false;
     }
 }
