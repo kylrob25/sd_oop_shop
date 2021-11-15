@@ -19,6 +19,8 @@ public abstract class DAO<K, V> {
 
     public abstract boolean modify(V value, String field, Object obj);
 
+    public abstract boolean delete(K key);
+
     public V get(K key) {
         return dataMap.get(key);
     }

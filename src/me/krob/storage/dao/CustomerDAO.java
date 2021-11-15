@@ -80,4 +80,8 @@ public class CustomerDAO extends DAO<String, Customer> {
     public boolean modify(Customer customer, String field, Object obj) {
         return false;
     }
+
+    public boolean delete(String key) {
+        return false;
+    }
 }

@@ -2,6 +2,7 @@ package me.krob.menu;
 
 import me.krob.Main;
 import me.krob.model.product.Product;
+import me.krob.storage.dao.ProductDAO;
 
 import javax.swing.*;
 
@@ -57,6 +58,21 @@ public class ModifyProductsMenu extends Menu {
             // Showing edit product menu
             Product product = productsList.getSelectedValue();
             main.getEditProductMenu().view(product);
+        });
+
+        deleteButton.addActionListener(e -> {
+            ProductDAO productDAO = main.getDatabaseManager().getProductDAO();
+            Product product = productsList.getSelectedValue();
+            int productId = product.getId();
+
+            if (!productDAO.delete(productId)) {
+                JOptionPane.showMessageDialog(null, String.format("Failed to delete product! (ID=%s)", productId));
+                return;
+            }
+
+            updateProductListModel();
+            productsList.setSelectedIndex(0);
+            JOptionPane.showMessageDialog(null, String.format("Deleted Product! (ID=%s)", productId));
         });
     }
 

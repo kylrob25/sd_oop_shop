@@ -152,6 +152,7 @@ public class EditProductMenu extends Menu {
                 try {
                     size = Integer.parseInt(sizeString);
                 } catch (Throwable throwable) {
+                    throwable.printStackTrace();
                     extraField.setText(null);
                     JOptionPane.showMessageDialog(null, "Please ensure the size is valid!");
                     return;

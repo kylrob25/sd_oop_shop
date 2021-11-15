@@ -55,6 +55,13 @@ public class ProductDAO extends DAO<Integer, Product> {
         return false;
     }
 
+    /***
+     *
+     * @param product - the product
+     * @param field - the field nae
+     * @param obj - the object
+     * @return - was the modification successful
+     */
     public boolean modify(Product product, String field, Object obj) {
         try (Connection connection = manager.getConnection();
              PreparedStatement statement = connection.prepareStatement("UPDATE Products SET " + field + " = ? WHERE ProductId = ?");) {
@@ -68,35 +75,24 @@ public class ProductDAO extends DAO<Integer, Product> {
         return false;
     }
 
-    /*
-    public boolean modify(Product value) {
-        try (Connection connection = manager.getConnection()) {
-            PreparedStatement insertStatement = null;
+    /**
+     * Delete a product
+     * @param key - the product ID
+     * @return - was the removal successful
+     */
+    public boolean delete(Integer key) {
+        try (Connection connection = manager.getConnection();
+             PreparedStatement statement = connection.prepareStatement("DELETE FROM Products WHERE ProductId = ?")) {
+            statement.setInt(1, key);
 
-            if (value instanceof Footwear) {
-                Footwear footwear = (Footwear) value;
-
-                insertStatement = connection.prepareStatement("UPDATE Products SET ProductName = ?, Price = ?, StockLevel = ?, Size = ? WHERE ProductId = ?");
-                insertStatement.setString(1, footwear.getName());
-                insertStatement.setDouble(2, footwear.getPrice());
-                insertStatement.setInt(3, footwear.getStockLevel());
-                insertStatement.setInt(4, footwear.getSize());
-                insertStatement.setInt(5, footwear.getId());
-            } else {
-                Clothing clothing = (Clothing) value;
-
-                insertStatement = connection.prepareStatement("UPDATE Products SET ProductName = ?, Price = ?, StockLevel = ?, Measurement = ? WHERE ProductId = ?");
-                insertStatement.setString(1, clothing.getName());
-                insertStatement.setDouble(2, clothing.getPrice());
-                insertStatement.setInt(3, clothing.getStockLevel());
-                insertStatement.setString(4, clothing.getMeasurement());
-                insertStatement.setInt(5, clothing.getId());
+            // Removing data from the map
+            if (!statement.execute()) {
+                dataMap.remove(key);
+                return true;
             }
-
-            return !insertStatement.execute();
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
         return false;
-    }*/
+    }
 }

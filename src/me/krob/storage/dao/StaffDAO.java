@@ -49,4 +49,8 @@ public class StaffDAO extends DAO<String, Staff> {
     public boolean modify(Staff staff, String field, Object obj) {
         return false;
     }
+
+    public boolean delete(String key) {
+        return false;
+    }
 }
