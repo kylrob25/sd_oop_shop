@@ -43,13 +43,14 @@ public class BasketTableModel extends AbstractTableModel {
 
             if (line != null) {
                 Product product = line.getProduct();
+
                 switch (columnIndex) {
                     case 0:
                         return line.getId();
                     case 1:
                         return product.getName();
                     case 2:
-                        return product.getPrice();
+                        return "£" + product.getPrice();
                     case 3:
                         return line.getQuantity();
                 }
