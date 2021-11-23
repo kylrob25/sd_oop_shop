@@ -3,7 +3,7 @@ package me.krob;
 import me.krob.session.UserSession;
 import me.krob.menu.*;
 import me.krob.storage.DatabaseManager;
-import me.krob.util.ModelUtil;
+import me.krob.util.model.CategoryListModel;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,7 +12,6 @@ public class Main {
 
     private final DatabaseManager databaseManager;
     private final UserSession userSession;
-    private final ModelUtil modelUtil;
 
     private final MainMenu mainMenu;
     private final CustomerLoginMenu customerLoginMenu;
@@ -24,9 +23,9 @@ public class Main {
     private final RegistrationMenu registrationMenu;
     private final EditProductMenu editProductMenu;
 
-    public Main() {
-        modelUtil = new ModelUtil(this);
+    private final CategoryListModel categoryListModel;
 
+    public Main() {
         databaseManager = new DatabaseManager();
         databaseManager.loadDriver();
         databaseManager.loadDAO();
@@ -35,6 +34,8 @@ public class Main {
 
         mainMenu = new MainMenu(this);
         mainMenu.setVisible(true);
+
+        categoryListModel = new CategoryListModel();
 
         customerLoginMenu = new CustomerLoginMenu(this);
         staffLoginMenu = new StaffLoginMenu(this);
@@ -50,12 +51,12 @@ public class Main {
         return userSession;
     }
 
-    public ModelUtil getModelUtil() {
-        return modelUtil;
-    }
-
     public DatabaseManager getDatabaseManager() {
         return databaseManager;
+    }
+
+    public CategoryListModel getCategoryListModel() {
+        return categoryListModel;
     }
 
     public MainMenu getMainMenu() {

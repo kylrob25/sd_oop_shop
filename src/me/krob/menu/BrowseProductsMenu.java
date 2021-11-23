@@ -1,6 +1,8 @@
 package me.krob.menu;
 
 import me.krob.Main;
+import me.krob.model.order.Order;
+import me.krob.model.order.OrderLine;
 import me.krob.model.product.Product;
 import me.krob.session.UserSession;
 
@@ -21,6 +23,9 @@ public class BrowseProductsMenu extends JFrame {
     private JSpinner quantityField;
     private JLabel quantityText;
 
+    private ViewBasketMenu basketMenu;
+    private Order order;
+
     public BrowseProductsMenu(Main main) {
         super("Browse Products");
         this.main = main;
@@ -32,7 +37,7 @@ public class BrowseProductsMenu extends JFrame {
         pack();
 
         // Setting the category model
-        categoryList.setModel(main.getModelUtil().getCategoryListModel());
+        categoryList.setModel(main.getCategoryListModel());
 
         // Setting the default selected value
         categoryList.setSelectedIndex(0);
@@ -70,7 +75,7 @@ public class BrowseProductsMenu extends JFrame {
 
         productsList.addListSelectionListener(e -> {
             // Resetting spinner when we click a new item
-            quantityField.setValue(0);
+            quantityField.setValue(1);
         });
 
         quantityField.addChangeListener(e -> {
@@ -81,7 +86,7 @@ public class BrowseProductsMenu extends JFrame {
 
             // Making sure the value cannot be below 0
             if (product == null || (next < 0 || previous < 0)) {
-                quantityField.setValue(0);
+                quantityField.setValue(1);
                 return;
             }
 
@@ -102,14 +107,46 @@ public class BrowseProductsMenu extends JFrame {
 
             Product product = productsList.getSelectedValue();
             int quantity = (int) quantityField.getValue();
+
+            int stock = product.getStockLevel();
+            int newStock = stock - quantity;
+
+            if (newStock < 0) {
+                JOptionPane.showMessageDialog(null, String.format("Not enough stock! (Stock: %s)", stock));
+                return;
+            }
+
+            // Adjust stock level
+            product.setStockLevel(newStock);
+
+            OrderLine orderLine = new OrderLine(0, product, quantity);
+            order.addOrderLine(orderLine);
+        });
+
+        viewBasketButton.addActionListener(e -> {
+            // Hiding menu
+            dispose();
+
+            // Showing a menu depending on if they are logged in or not
+            UserSession session = main.getUserSession();
+            if (!session.isActive()) {
+                JOptionPane.showMessageDialog(null, "You must be logged in to view your basket!");
+                return;
+            }
+
+            basketMenu.setVisible(true);
         });
     }
 
     public void updateProductListModel() {
-        main.getModelUtil().updateProductListModel(
-                (DefaultListModel<Product>) productsList.getModel(),
-                categoryList.getSelectedValue()
-        );
+        DefaultListModel<Product> model = (DefaultListModel<Product>) productsList.getModel();
+        String selectedValue = categoryList.getSelectedValue();
+
+        model.clear();
+
+        main.getDatabaseManager().getProductDAO().getValues().stream()
+                .filter(product -> product.getClass().getSimpleName().equals(selectedValue))
+                .forEach(model::addElement);
     }
 
     public void view() {
@@ -122,5 +159,11 @@ public class BrowseProductsMenu extends JFrame {
         viewBasketButton.setVisible(active);
         quantityField.setVisible(active);
         quantityText.setVisible(active);
+
+        // We only create a new order if they don't already have one
+        if (active && order == null) {
+            order = new Order();
+            basketMenu = new ViewBasketMenu(main, order);
+        }
     }
 }

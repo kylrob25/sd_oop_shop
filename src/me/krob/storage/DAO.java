@@ -1,8 +1,6 @@
 package me.krob.storage;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public abstract class DAO<K, V> {
     protected final Map<K, V> dataMap = new HashMap<>();

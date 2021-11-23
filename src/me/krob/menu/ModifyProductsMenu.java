@@ -21,7 +21,7 @@ public class ModifyProductsMenu extends Menu {
         setContentPane(mainPanel);
 
         // Setting the category model
-        categoryList.setModel(main.getModelUtil().getCategoryListModel());
+        categoryList.setModel(main.getCategoryListModel());
 
         // Setting the default selected value
         categoryList.setSelectedIndex(0);
@@ -77,9 +77,13 @@ public class ModifyProductsMenu extends Menu {
     }
 
     public void updateProductListModel() {
-        main.getModelUtil().updateProductListModel(
-                (DefaultListModel<Product>) productsList.getModel(),
-                categoryList.getSelectedValue()
-        );
+        DefaultListModel<Product> model = (DefaultListModel<Product>) productsList.getModel();
+        String selectedValue = categoryList.getSelectedValue();
+
+        model.clear();
+
+        main.getDatabaseManager().getProductDAO().getValues().stream()
+                .filter(product -> product.getClass().getSimpleName().equals(selectedValue))
+                .forEach(model::addElement);
     }
 }

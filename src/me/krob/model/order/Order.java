@@ -1,8 +1,6 @@
 package me.krob.model.order;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Order {
     private int id;
@@ -10,6 +8,8 @@ public class Order {
     private double total;
     private String status;
     private Map<Integer, OrderLine> lines;
+
+    private List<OrderLine> lineIndex = new ArrayList<>();
 
     /**
      * Empty Constructor
@@ -34,6 +34,18 @@ public class Order {
         this.status = status;
 
         lines = new HashMap<>();
+    }
+
+    public void addOrderLine(OrderLine line) {
+        int id = 0;
+
+        while (lines.containsKey(id)) {
+            id++;
+        }
+
+        line.setId(id);
+        lines.put(id, line);
+        lineIndex.add(line);
     }
 
     public void setId(int id) {
@@ -74,5 +86,9 @@ public class Order {
 
     public Map<Integer, OrderLine> getLines() {
         return lines;
+    }
+
+    public OrderLine getLineByIndex(int index) {
+        return lineIndex.get(index);
     }
 }
