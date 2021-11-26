@@ -51,6 +51,9 @@ public class BrowseProductsMenu extends JFrame {
         // Setting the default selected product
         productsList.setSelectedIndex(0);
 
+        // Initially setting the quantity spinner
+        quantityField.setValue(1);
+
         backButton.addActionListener(e -> {
             // Hiding menu
             dispose();
