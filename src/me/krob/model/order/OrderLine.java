@@ -32,6 +32,15 @@ public class OrderLine {
         this(id, product, quantity, product.getPrice() * quantity);
     }
 
+    /**
+     * Constructor without ID nor total
+     * @param product - OrderLine Product
+     * @param quantity - OrderLine Quantity
+     */
+    public OrderLine(Product product, int quantity) {
+        this(0, product, quantity, product.getPrice() * quantity);
+    }
+
     public void setId(int id) {
         this.id = id;
     }

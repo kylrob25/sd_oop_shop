@@ -145,7 +145,13 @@ public class EditProductMenu extends Menu {
         editExtraButton.addActionListener(e -> {
             if (product instanceof Footwear) {
                 Footwear footwear = (Footwear) product;
-                String sizeString = extraLabel.getText();
+                String sizeString = extraField.getText();
+
+                // Ensuring the input is not null
+                if (isEmpty(sizeString)) {
+                    JOptionPane.showMessageDialog(null, "Please ensure the size is valid!");
+                    return;
+                }
 
                 // Size validation
                 int size;

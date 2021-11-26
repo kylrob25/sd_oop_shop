@@ -8,17 +8,24 @@ public class Order {
     private double total;
     private String status;
     private Map<Integer, OrderLine> lines;
+    private List<OrderLine> lineIndex;
 
-    private List<OrderLine> lineIndex = new ArrayList<>();
+    /**
+     * Top Constructor
+     * @param date
+     */
+    Order(Date date) {
+        this.date = date;
+    }
 
     /**
      * Empty Constructor
      */
     public Order() {
-        date = new Date();
+        this(new Date());
         lines = new HashMap<>();
+        lineIndex = new ArrayList<>();
     }
-
 
     /**
      * Parameter Constructor
@@ -28,22 +35,29 @@ public class Order {
      * @param status - Order Status
      */
     public Order(int id, Date date, double total, String status) {
+        this(date);
+
         this.id = id;
-        this.date = date;
         this.total = total;
         this.status = status;
-
-        lines = new HashMap<>();
     }
 
+    /**
+     * Add a line to the order
+     * @param line - the line to be added
+     */
     public void addOrderLine(OrderLine line) {
         int id = 0;
 
+        // If the id exists we increment the id to ensure it is unique
         while (lines.containsKey(id)) {
             id++;
         }
 
+        // Setting the new id
         line.setId(id);
+
+        // Storing the line
         lines.put(id, line);
         lineIndex.add(line);
     }

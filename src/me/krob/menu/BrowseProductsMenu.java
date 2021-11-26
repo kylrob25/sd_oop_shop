@@ -119,7 +119,7 @@ public class BrowseProductsMenu extends JFrame {
             // Adjust stock level
             product.setStockLevel(newStock);
 
-            OrderLine orderLine = new OrderLine(0, product, quantity);
+            OrderLine orderLine = new OrderLine(product, quantity);
             order.addOrderLine(orderLine);
         });
 
