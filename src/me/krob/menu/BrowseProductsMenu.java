@@ -124,6 +124,7 @@ public class BrowseProductsMenu extends JFrame {
 
             OrderLine orderLine = new OrderLine(product, quantity);
             order.addOrderLine(orderLine);
+            JOptionPane.showMessageDialog(null, String.format("Added %s x%s to the basket for £%.2f!", product.getName(), quantity, product.getPrice() * quantity));
         });
 
         viewBasketButton.addActionListener(e -> {
