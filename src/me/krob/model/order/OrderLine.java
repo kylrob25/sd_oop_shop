@@ -41,6 +41,10 @@ public class OrderLine {
         this(0, product, quantity, product.getPrice() * quantity);
     }
 
+    public void addQuantity(int quantity) {;
+        total = product.getPrice() * (this.quantity += quantity);
+    }
+
     public void setId(int id) {
         this.id = id;
     }

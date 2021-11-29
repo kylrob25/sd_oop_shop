@@ -123,7 +123,7 @@ public class BrowseProductsMenu extends JFrame {
             product.setStockLevel(newStock);
 
             OrderLine orderLine = new OrderLine(product, quantity);
-            order.addOrderLine(orderLine);
+            order.tryOrderLine(orderLine);
             JOptionPane.showMessageDialog(null, String.format("Added %s x%s to the basket for £%.2f!", product.getName(), quantity, product.getPrice() * quantity));
         });
 

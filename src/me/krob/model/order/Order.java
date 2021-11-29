@@ -43,6 +43,40 @@ public class Order {
     }
 
     /**
+     * Finding an existing line with the same product id
+     * @param line - the new line
+     * @return - the found line
+     */
+    public OrderLine hasProduct(OrderLine line) {
+        int productId = line.getProduct().getId();
+
+        for (OrderLine orderLine: lineIndex) {
+            if (orderLine.getProduct().getId() == productId) {
+                return orderLine;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Try modifying an existing line before adding a new one
+     * @param line - the new line
+     */
+    public void tryOrderLine(OrderLine line) {
+        OrderLine found = hasProduct(line);
+
+        // There isn't a line with the same ID so we just add a new one
+        if (found == null) {
+            addOrderLine(line);
+            return;
+        }
+
+        // Updating the existing lines quantity
+        int quantity = line.getQuantity();
+        found.addQuantity(quantity);
+    }
+
+    /**
      * Add a line to the order
      * @param line - the line to be added
      */
@@ -104,5 +138,9 @@ public class Order {
 
     public OrderLine getLineByIndex(int index) {
         return lineIndex.get(index);
+    }
+
+    public OrderLine getLine(int id) {
+        return lines.get(id);
     }
 }
