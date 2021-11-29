@@ -8,10 +8,9 @@ import me.krob.session.UserSession;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.TimeUnit;
 
-public class BrowseProductsMenu extends JFrame {
-    private final Main main;
-
+public class BrowseProductsMenu extends Menu {
     private JPanel mainPanel;
     private JPanel listPanel;
     private JPanel buttonPanel;
@@ -22,19 +21,14 @@ public class BrowseProductsMenu extends JFrame {
     private JList<Product> productsList;
     private JSpinner quantityField;
     private JLabel quantityText;
+    private JLabel displayLabel;
 
     private ViewBasketMenu basketMenu;
     private Order order;
 
     public BrowseProductsMenu(Main main) {
-        super("Browse Products");
-        this.main = main;
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        super("Browse Products", main);
         setContentPane(mainPanel);
-        setPreferredSize(new Dimension(500, 250));
-        setResizable(false);
-        pack();
 
         // Setting the category model
         categoryList.setModel(main.getCategoryListModel());
@@ -61,7 +55,16 @@ public class BrowseProductsMenu extends JFrame {
             // Showing a menu depending on if they are logged in or not
             UserSession session = main.getUserSession();
             if (session.isActive()) {
-                main.getCustomerHomeMenu().setVisible(true);
+                int result = JOptionPane.showConfirmDialog(null,
+                        "Are you sure? Your basket will be cleared!", "Warning!", JOptionPane.YES_NO_OPTION);
+
+                if (result == JOptionPane.YES_OPTION) {
+                    main.getCustomerHomeMenu().setVisible(true);
+
+                    // This isn't really needed as the GC will get it but we may aswell
+                    order = null;
+                    basketMenu = null;
+                }
             } else {
                 main.getMainMenu().setVisible(true);
             }
@@ -104,7 +107,7 @@ public class BrowseProductsMenu extends JFrame {
         addToBasketButton.addActionListener(e -> {
             // This should never run as we always set default selected value
             if (productsList.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Please select a product!");
+                updateDisplay("Please select a product!");
                 return;
             }
 
@@ -115,7 +118,7 @@ public class BrowseProductsMenu extends JFrame {
             int newStock = stock - quantity;
 
             if (newStock < 0) {
-                JOptionPane.showMessageDialog(null, String.format("Not enough stock! (Stock: %s)", stock));
+                updateDisplay(String.format("Not enough stock! (Stock: %s)", stock));
                 return;
             }
 
@@ -124,20 +127,14 @@ public class BrowseProductsMenu extends JFrame {
 
             OrderLine orderLine = new OrderLine(product, quantity);
             order.tryOrderLine(orderLine);
-            JOptionPane.showMessageDialog(null, String.format("Added %s x%s to the basket for £%.2f!", product.getName(), quantity, product.getPrice() * quantity));
+            updateDisplay(String.format("Added %s x%s to the basket for £%.2f!", product.getName(), quantity, product.getPrice() * quantity));
         });
 
         viewBasketButton.addActionListener(e -> {
             // Hiding menu
             dispose();
 
-            // Showing a menu depending on if they are logged in or not
-            UserSession session = main.getUserSession();
-            if (!session.isActive()) {
-                JOptionPane.showMessageDialog(null, "You must be logged in to view your basket!");
-                return;
-            }
-
+            // Showing menu
             basketMenu.setVisible(true);
         });
     }
@@ -169,5 +166,9 @@ public class BrowseProductsMenu extends JFrame {
             order = new Order();
             basketMenu = new ViewBasketMenu(main, order);
         }
+    }
+
+    public JLabel getDisplayLabel() {
+        return displayLabel;
     }
 }

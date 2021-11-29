@@ -6,24 +6,17 @@ import me.krob.model.user.users.Staff;
 import javax.swing.*;
 import java.awt.*;
 
-public class StaffLoginMenu extends JFrame{
-    private final Main main;
-
+public class StaffLoginMenu extends Menu {
     private JPanel mainPanel;
     private JButton mainMenuButton;
     private JButton loginButton;
     private JTextField usernameField;
     private JPasswordField passwordField;
+    private JLabel displayLabel;
 
     public StaffLoginMenu(Main main) {
-        super("Staff Login");
-        this.main = main;
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        super("Staff Login", main);
         setContentPane(mainPanel);
-        setPreferredSize(new Dimension(500, 250));
-        setResizable(false);
-        pack();
 
         mainMenuButton.addActionListener(e -> {
             // Cleaning up this menu
@@ -43,7 +36,7 @@ public class StaffLoginMenu extends JFrame{
 
             // Couldn't find a staff member with the provided username
             if (staff == null) {
-                JOptionPane.showMessageDialog(null, "Invalid username...");
+                updateDisplay("Invalid username...");
                 usernameField.setText(null);
                 passwordField.setText(null);
                 return;
@@ -51,7 +44,7 @@ public class StaffLoginMenu extends JFrame{
 
             // Passwords do not match
             if (!password.equals(staff.getPassword())) {
-                JOptionPane.showMessageDialog(null, "Incorrect password...");
+                updateDisplay("Invalid username...");
                 passwordField.setText(null);
                 return;
             }
@@ -64,5 +57,9 @@ public class StaffLoginMenu extends JFrame{
             // Showing staff home menu
             main.getStaffHomeMenu().login(staff);
         });
+    }
+
+    public JLabel getDisplayLabel() {
+        return displayLabel;
     }
 }

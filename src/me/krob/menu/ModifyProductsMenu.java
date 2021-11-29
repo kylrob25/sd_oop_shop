@@ -15,6 +15,7 @@ public class ModifyProductsMenu extends Menu {
     private JList<Product> productsList;
     private JButton editButton;
     private JButton deleteButton;
+    private JLabel displayLabel;
 
     public ModifyProductsMenu(Main main) {
         super("Modify Products", main);
@@ -66,13 +67,13 @@ public class ModifyProductsMenu extends Menu {
             int productId = product.getId();
 
             if (!productDAO.delete(productId)) {
-                JOptionPane.showMessageDialog(null, String.format("Failed to delete product! (ID=%s)", productId));
+                updateDisplay(String.format("Failed to delete product! (ID=%s)", productId));
                 return;
             }
 
             updateProductListModel();
             productsList.setSelectedIndex(0);
-            JOptionPane.showMessageDialog(null, String.format("Deleted Product! (ID=%s)", productId));
+            updateDisplay(String.format("Deleted Product! (ID=%s)", productId));
         });
     }
 
@@ -85,5 +86,9 @@ public class ModifyProductsMenu extends Menu {
         main.getDatabaseManager().getProductDAO().getValues().stream()
                 .filter(product -> product.getClass().getSimpleName().equals(selectedValue))
                 .forEach(model::addElement);
+    }
+
+    public JLabel getDisplayLabel() {
+        return displayLabel;
     }
 }

@@ -34,6 +34,7 @@ public class RegistrationMenu extends Menu {
     private JTextField addressLine2Field;
     private JTextField townField;
     private JTextField postCodeField;
+    private JLabel displayLabel;
     private JTextField phoneField;
 
     public RegistrationMenu(Main main) {
@@ -136,5 +137,9 @@ public class RegistrationMenu extends Menu {
                 addressLine2Field, townField,
                 postCodeField
         ).forEach(field -> field.setText(null));
+    }
+
+    public JLabel getDisplayLabel() {
+        return displayLabel;
     }
 }

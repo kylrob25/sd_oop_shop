@@ -33,4 +33,8 @@ public class MainMenu extends Menu {
             main.getBrowseProductsMenu().view();
         });
     }
+
+    public JLabel getDisplayLabel() {
+        return null;
+    }
 }

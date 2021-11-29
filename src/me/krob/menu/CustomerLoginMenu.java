@@ -5,6 +5,7 @@ import me.krob.model.user.users.Customer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.TimeUnit;
 
 public class CustomerLoginMenu extends Menu {
     private JPanel mainPanel;
@@ -13,6 +14,7 @@ public class CustomerLoginMenu extends Menu {
     private JButton mainMenuButton;
     private JPasswordField passwordField;
     private JTextField usernameField;
+    private JLabel displayLabel;
 
     public CustomerLoginMenu(Main main) {
         super("Customer Login", main);
@@ -36,7 +38,7 @@ public class CustomerLoginMenu extends Menu {
 
             // Couldn't find a customer with the provided username
             if (customer == null) {
-                JOptionPane.showMessageDialog(null, "Invalid username...");
+                updateDisplay("Incorrect username...");
                 passwordField.setText(null);
                 usernameField.setText(null);
                 return;
@@ -44,7 +46,7 @@ public class CustomerLoginMenu extends Menu {
 
             // Passwords do not match
             if (!password.equals(customer.getPassword())) {
-                JOptionPane.showMessageDialog(null, "Incorrect password...");
+                updateDisplay("Incorrect password...");
                 passwordField.setText(null);
                 usernameField.setText(null);
                 return;
@@ -68,5 +70,9 @@ public class CustomerLoginMenu extends Menu {
             // Showing registration menu
             main.getRegistrationMenu().setVisible(true);
         });
+    }
+
+    public JLabel getDisplayLabel() {
+        return displayLabel;
     }
 }

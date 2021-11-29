@@ -25,6 +25,7 @@ public class EditProductMenu extends Menu {
     private JButton editPriceButton;
     private JButton editStockButton;
     private JButton editExtraButton;
+    private JLabel displayLabel;
 
     // The product we're editing
     private Product product;
@@ -59,27 +60,27 @@ public class EditProductMenu extends Menu {
 
             // Ensuring name field is not empty
             if (isEmpty(name)) {
-                JOptionPane.showMessageDialog(null, "Please ensure the name field is not empty!");
+                updateDisplay("Please ensure the name field is not empty!");
                 return;
             }
 
             // Prevent pointless updates
             String oldName = product.getName();
             if (oldName.equals(name)) {
-                JOptionPane.showMessageDialog(null, "Please ensure product names are different!");
+                updateDisplay("Please ensure product names are different!");
                 return;
             }
 
             // Modifying database
             ProductDAO productDAO = main.getDatabaseManager().getProductDAO();
             if (!productDAO.modify(product, "ProductName", name)) {
-                JOptionPane.showMessageDialog(null, "Failed to modify product name!");
+                updateDisplay("Failed to modify product name!");
                 return;
             }
 
             // Setting name
             product.setName(name);
-            JOptionPane.showMessageDialog(null, String.format("New Product Name! (%s -> %s)", oldName, name));
+            updateDisplay(String.format("New Product Name! (%s -> %s)", oldName, name));
         });
 
         editPriceButton.addActionListener(e -> {
@@ -87,7 +88,7 @@ public class EditProductMenu extends Menu {
 
             // Ensuring field is not empty
             if (isEmpty(priceString)) {
-                JOptionPane.showMessageDialog(null, "Please ensure the price field is not empty!");
+                updateDisplay("Please ensure the price field is not empty!");
                 return;
             }
 
@@ -97,27 +98,27 @@ public class EditProductMenu extends Menu {
                 price = Double.parseDouble(priceString);
             } catch (Throwable throwable) {
                 priceField.setText(null);
-                JOptionPane.showMessageDialog(null, "Please ensure the price is valid!");
+                updateDisplay("Please ensure the price is valid!");
                 return;
             }
 
             // Prevent pointless updates
             double oldPrice = product.getPrice();
             if (oldPrice == price) {
-                JOptionPane.showMessageDialog(null, "Please ensure product prices are different!");
+                updateDisplay("Please ensure product prices are different!");
                 return;
             }
 
             // Modifying database
             ProductDAO productDAO = main.getDatabaseManager().getProductDAO();
             if (!productDAO.modify(product, "Price", price)) {
-                JOptionPane.showMessageDialog(null, "Failed to modify product price!");
+                updateDisplay("Failed to modify product price!");
                 return;
             }
 
             // Setting price
             product.setPrice(price);
-            JOptionPane.showMessageDialog(null, String.format("New Product Price! (£%.2f -> £%.2f)", oldPrice, price));
+            updateDisplay(String.format("New Product Price! (£%.2f -> £%.2f)", oldPrice, price));
         });
 
         editStockButton.addActionListener(e -> {
@@ -126,20 +127,20 @@ public class EditProductMenu extends Menu {
 
             // Prevent pointless updates
             if (oldStock == stock) {
-                JOptionPane.showMessageDialog(null, "Please ensure product stock levels are different!");
+                updateDisplay("Please ensure product stock levels are different!");
                 return;
             }
 
             // Modifying database
             ProductDAO productDAO = main.getDatabaseManager().getProductDAO();
             if (!productDAO.modify(product, "StockLevel", stock)) {
-                JOptionPane.showMessageDialog(null, "Failed to modify product stock!");
+                updateDisplay("Failed to modify product stock!");
                 return;
             }
 
             // Setting new stock level
             product.setStockLevel(stock);
-            JOptionPane.showMessageDialog(null, String.format("New Product Stock Level! (%s -> %s)", oldStock, stock));
+            updateDisplay(String.format("New Product Stock Level! (%s -> %s)", oldStock, stock));
         });
 
         editExtraButton.addActionListener(e -> {
@@ -149,7 +150,7 @@ public class EditProductMenu extends Menu {
 
                 // Ensuring the input is not null
                 if (isEmpty(sizeString)) {
-                    JOptionPane.showMessageDialog(null, "Please ensure the size is valid!");
+                    updateDisplay("Please ensure the size is valid!");
                     return;
                 }
 
@@ -160,7 +161,7 @@ public class EditProductMenu extends Menu {
                 } catch (Throwable throwable) {
                     throwable.printStackTrace();
                     extraField.setText(null);
-                    JOptionPane.showMessageDialog(null, "Please ensure the size is valid!");
+                    updateDisplay("Please ensure the size is valid!");
                     return;
                 }
 
@@ -168,20 +169,20 @@ public class EditProductMenu extends Menu {
                 int oldSize = footwear.getSize();
                 if (oldSize == size) {
                     extraField.setText(null);
-                    JOptionPane.showMessageDialog(null, "Please ensure footwear sizes are different!");
+                    updateDisplay("Please ensure footwear sizes are different!");
                     return;
                 }
 
                 // Modifying database
                 ProductDAO productDAO = main.getDatabaseManager().getProductDAO();
                 if (!productDAO.modify(footwear, "Size", size)) {
-                    JOptionPane.showMessageDialog(null, "Failed to modify footwear size!");
+                    updateDisplay("Failed to modify footwear size!");
                     return;
                 }
 
                 // Setting size
                 footwear.setSize(size);
-                JOptionPane.showMessageDialog(null, String.format("New Footwear Size! (%s -> %s)", oldSize, size));
+                updateDisplay(String.format("New Footwear Size! (%s -> %s)", oldSize, size));
                 return;
             }
 
@@ -193,19 +194,19 @@ public class EditProductMenu extends Menu {
             // Preventing pointless updates
             if (oldMeasurement.equals(measurement)) {
                 extraField.setText(null);
-                JOptionPane.showMessageDialog(null, "Please ensure clothing measurements' are different!");
+                updateDisplay("Please ensure clothing measurements' are different!");
                 return;
             }
 
             // Modifying database
             if (!productDAO.modify(clothing, "Measurement", measurement)) {
-                JOptionPane.showMessageDialog(null, "Failed to modify clothing measurement!");
+                updateDisplay("Failed to modify clothing measurement!");
                 return;
             }
 
             // Setting measurement
             clothing.setMeasurement(measurement);
-            JOptionPane.showMessageDialog(null, String.format("New Clothing Measurement! (%s -> %s)", oldMeasurement, measurement));
+            updateDisplay(String.format("New Clothing Measurement! (%s -> %s)", oldMeasurement, measurement));
         });
     }
 
@@ -249,5 +250,9 @@ public class EditProductMenu extends Menu {
         Arrays.asList(
                 idField, stockField
         ).forEach(field -> field.setValue(0));
+    }
+
+    public JLabel getDisplayLabel() {
+        return displayLabel;
     }
 }

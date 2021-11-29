@@ -41,6 +41,18 @@ public class OrderLine {
         this(0, product, quantity, product.getPrice() * quantity);
     }
 
+    /**
+     * Removing quantity and updating total
+     * @param quantity - amount to remove
+     */
+    public void removeQuantity(int quantity) {
+        total = product.getPrice() * (this.quantity -= quantity);
+    }
+
+    /**
+     * Adding quantity and updating total
+     * @param quantity - amount to add
+     */
     public void addQuantity(int quantity) {;
         total = product.getPrice() * (this.quantity += quantity);
     }

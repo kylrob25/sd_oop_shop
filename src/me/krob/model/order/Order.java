@@ -96,6 +96,11 @@ public class Order {
         lineIndex.add(line);
     }
 
+    public void removeOrderLine(OrderLine line) {
+        lines.remove(line.getId());
+        lineIndex.remove(line);
+    }
+
     public void setId(int id) {
         this.id = id;
     }

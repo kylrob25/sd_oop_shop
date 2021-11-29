@@ -29,4 +29,8 @@ public class StaffHomeMenu extends HomeMenu {
     public void setGreetingText(String text) {
         greetingLabel.setText(text);
     }
+
+    public JLabel getDisplayLabel() {
+        return null;
+    }
 }
