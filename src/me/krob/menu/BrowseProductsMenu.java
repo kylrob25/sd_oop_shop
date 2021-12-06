@@ -135,6 +135,7 @@ public class BrowseProductsMenu extends Menu {
             dispose();
 
             // Showing menu
+            basketMenu.updateTotal(order);
             basketMenu.setVisible(true);
         });
     }

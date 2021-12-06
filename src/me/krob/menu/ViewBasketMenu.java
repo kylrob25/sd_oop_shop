@@ -9,10 +9,10 @@ import me.krob.util.model.BasketTableModel;
 import javax.swing.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class ViewBasketMenu extends Menu {
     private static final ScheduledExecutorService SERVICE = Executors.newSingleThreadScheduledExecutor();
+    private static final String TOTAL = "Total: £%.2f";
 
     private JPanel mainPanel;
     private JTable basketTable;
@@ -20,6 +20,8 @@ public class ViewBasketMenu extends Menu {
     private JButton removeSelectedButton;
     private JSpinner quantityField;
     private JLabel displayLabel;
+    private JButton purchaseButton;
+    private JLabel totalLabel;
 
     public ViewBasketMenu(Main main, Order order) {
         super("View Basket", main);
@@ -84,7 +86,12 @@ public class ViewBasketMenu extends Menu {
             basketTable.repaint();
 
             updateDisplay(String.format("Removed x%s %s from the basket!", amountToRemove, line.getProduct().getName()));
+            updateTotal(order);
         });
+    }
+
+    public void updateTotal(Order order) {
+        totalLabel.setText(String.format(TOTAL, order.calculateTotal()));
     }
 
     public JLabel getDisplayLabel() {

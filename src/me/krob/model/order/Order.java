@@ -25,6 +25,7 @@ public class Order {
         this(new Date());
         lines = new HashMap<>();
         lineIndex = new ArrayList<>();
+        status = "In Progress";
     }
 
     /**
@@ -40,6 +41,10 @@ public class Order {
         this.id = id;
         this.total = total;
         this.status = status;
+    }
+
+    public double calculateTotal() {
+        return total = lineIndex.stream().mapToDouble(OrderLine::getTotal).sum();
     }
 
     /**
