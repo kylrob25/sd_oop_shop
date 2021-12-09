@@ -50,6 +50,10 @@ public class Product {
         this.price = price;
     }
 
+    public void increaseStockLevel(int amount) {
+        stockLevel += amount;
+    }
+
     public void setStockLevel(int stockLevel) {
         this.stockLevel =  stockLevel;
     }

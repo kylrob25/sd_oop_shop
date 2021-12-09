@@ -2,6 +2,7 @@ package me.krob.storage;
 
 import me.krob.model.product.Product;
 import me.krob.storage.dao.CustomerDAO;
+import me.krob.storage.dao.OrderDAO;
 import me.krob.storage.dao.ProductDAO;
 import me.krob.storage.dao.StaffDAO;
 
@@ -16,6 +17,7 @@ public class DatabaseManager {
     private final CustomerDAO customerDAO = new CustomerDAO(this);
     private final StaffDAO staffDAO = new StaffDAO(this);
     private final ProductDAO productDAO = new ProductDAO(this);
+    private final OrderDAO orderDAO = new OrderDAO(this);
 
     /**
      * Loading UCanAccess Driver
@@ -70,5 +72,13 @@ public class DatabaseManager {
      */
     public ProductDAO getProductDAO() {
         return productDAO;
+    }
+
+    /**
+     * Order DAO
+     * @return - the order dao
+     */
+    public OrderDAO getOrderDAO() {
+        return orderDAO;
     }
 }

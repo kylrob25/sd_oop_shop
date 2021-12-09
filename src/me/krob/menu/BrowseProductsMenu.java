@@ -26,6 +26,8 @@ public class BrowseProductsMenu extends Menu {
     private ViewBasketMenu basketMenu;
     private Order order;
 
+    private boolean ignoreQuantityChange;
+
     public BrowseProductsMenu(Main main) {
         super("Browse Products", main);
         setContentPane(mainPanel);
@@ -49,9 +51,6 @@ public class BrowseProductsMenu extends Menu {
         quantityField.setValue(1);
 
         backButton.addActionListener(e -> {
-            // Hiding menu
-            dispose();
-
             // Showing a menu depending on if they are logged in or not
             UserSession session = main.getUserSession();
             if (session.isActive()) {
@@ -59,13 +58,20 @@ public class BrowseProductsMenu extends Menu {
                         "Are you sure? Your basket will be cleared!", "Warning!", JOptionPane.YES_NO_OPTION);
 
                 if (result == JOptionPane.YES_OPTION) {
+                    // Hiding menu
+                    dispose();
+
+                    // Showing the customer menu
                     main.getCustomerHomeMenu().setVisible(true);
 
-                    // This isn't really needed as the GC will get it but we may aswell
-                    order = null;
-                    basketMenu = null;
+                    // Clearing the order
+                    clearOrder();
                 }
             } else {
+                // Hiding menu
+                dispose();
+
+                // Showing the main menu
                 main.getMainMenu().setVisible(true);
             }
         });
@@ -91,7 +97,7 @@ public class BrowseProductsMenu extends Menu {
             int previous = (int) quantityField.getPreviousValue();
 
             // Making sure the value cannot be below 0
-            if (product == null || (next < 0 || previous < 0)) {
+            if (product == null || (next < 1 || previous < 1)) {
                 quantityField.setValue(1);
                 return;
             }
@@ -113,8 +119,8 @@ public class BrowseProductsMenu extends Menu {
 
             Product product = productsList.getSelectedValue();
             int quantity = (int) quantityField.getValue();
-
             int stock = product.getStockLevel();
+
             int newStock = stock - quantity;
 
             if (newStock < 0) {
@@ -138,6 +144,12 @@ public class BrowseProductsMenu extends Menu {
             basketMenu.updateTotal(order);
             basketMenu.setVisible(true);
         });
+    }
+
+    public void clearOrder() {
+        // This isn't really needed as the GC will get it but we may aswell
+        order = null;
+        basketMenu = null;
     }
 
     public void updateProductListModel() {
@@ -165,11 +177,17 @@ public class BrowseProductsMenu extends Menu {
         // We only create a new order if they don't already have one
         if (active && order == null) {
             order = new Order();
+            order.setUsername(session.getUsername());
+
             basketMenu = new ViewBasketMenu(main, order);
         }
     }
 
     public JLabel getDisplayLabel() {
         return displayLabel;
+    }
+
+    public JSpinner getQuantityField() {
+        return quantityField;
     }
 }

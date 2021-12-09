@@ -31,6 +31,6 @@ public abstract class Menu extends JFrame {
     }
 
     public void clearDisplay() {
-        SCHEDULER.schedule(() -> getDisplayLabel().setText(null), 2, TimeUnit.SECONDS);
+        SCHEDULER.schedule(() -> getDisplayLabel().setText(null), 3, TimeUnit.SECONDS);
     }
 }

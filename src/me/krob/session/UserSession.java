@@ -9,6 +9,10 @@ public class UserSession {
         this.user = user;
     }
 
+    public String getUsername() {
+        return user.getUsername();
+    }
+
     public boolean isActive() {
         return user != null;
     }

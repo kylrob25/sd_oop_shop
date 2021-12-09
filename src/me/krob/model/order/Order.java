@@ -1,6 +1,10 @@
 package me.krob.model.order;
 
-import java.util.*;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Order {
     private int id;
@@ -9,6 +13,8 @@ public class Order {
     private String status;
     private Map<Integer, OrderLine> lines;
     private List<OrderLine> lineIndex;
+
+    private String username;
 
     /**
      * Top Constructor
@@ -22,7 +28,7 @@ public class Order {
      * Empty Constructor
      */
     public Order() {
-        this(new Date());
+        this(new Date(System.currentTimeMillis()));
         lines = new HashMap<>();
         lineIndex = new ArrayList<>();
         status = "In Progress";
@@ -43,6 +49,10 @@ public class Order {
         this.status = status;
     }
 
+    /**
+     * Calculate the order total
+     * @return - the newly calculated total
+     */
     public double calculateTotal() {
         return total = lineIndex.stream().mapToDouble(OrderLine::getTotal).sum();
     }
@@ -101,6 +111,10 @@ public class Order {
         lineIndex.add(line);
     }
 
+    /**
+     * Remove a line from the order
+     * @param line - the line to be removed
+     */
     public void removeOrderLine(OrderLine line) {
         lines.remove(line.getId());
         lineIndex.remove(line);
@@ -114,6 +128,10 @@ public class Order {
         this.date = date;
     }
 
+    public void updateDate(long time) {
+        this.date.setTime(time);
+    }
+
     public void setTotal(double total) {
         this.total = total;
     }
@@ -124,6 +142,10 @@ public class Order {
 
     public void setLines(Map<Integer, OrderLine> lines) {
         this.lines = lines;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getId() {
@@ -152,5 +174,17 @@ public class Order {
 
     public OrderLine getLine(int id) {
         return lines.get(id);
+    }
+
+    public int getLineCount() {
+        return lineIndex.size();
+    }
+
+    public boolean isEmpty() {
+        return lineIndex.isEmpty();
+    }
+
+    public String getUsername() {
+        return username;
     }
 }
