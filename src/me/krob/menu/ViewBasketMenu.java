@@ -7,6 +7,7 @@ import me.krob.model.product.Product;
 import me.krob.storage.DatabaseManager;
 import me.krob.storage.dao.OrderDAO;
 import me.krob.storage.dao.OrderLineDAO;
+import me.krob.storage.dao.ProductDAO;
 import me.krob.util.TableUtil;
 import me.krob.util.model.BasketTableModel;
 
@@ -140,7 +141,22 @@ public class ViewBasketMenu extends Menu {
             }
 
             OrderLineDAO orderLineDAO = databaseManager.getOrderLineDAO();
-            order.getLines().forEach(orderLineDAO::insert);
+            ProductDAO productDAO = databaseManager.getProductDAO();
+
+            // Iterating over each line
+            order.getLines().forEach(line -> {
+                // Inserting the line into the database
+                if (!orderLineDAO.insert(line)) {
+                    updateDisplay("Failed to insert line!");
+                    return;
+                }
+
+                // Updating the product stock in the database
+                Product product = line.getProduct();
+                if (!productDAO.modify(product, "StockLevel", product.getStockLevel())) {
+                    updateDisplay("Failed to modify product!");
+                }
+            });
 
             createConfirmationPage(order);
         });
