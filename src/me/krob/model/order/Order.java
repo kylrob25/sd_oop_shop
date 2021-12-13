@@ -164,8 +164,12 @@ public class Order {
         return status;
     }
 
-    public Map<Integer, OrderLine> getLines() {
+    public Map<Integer, OrderLine> getLineMap() {
         return lines;
+    }
+
+    public List<OrderLine> getLines() {
+        return lineIndex;
     }
 
     public OrderLine getLineByIndex(int index) {

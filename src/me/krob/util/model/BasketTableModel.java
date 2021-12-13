@@ -28,7 +28,7 @@ public class BasketTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return order.getLines().size();
+        return order.getLineCount();
     }
 
     @Override

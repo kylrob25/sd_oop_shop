@@ -8,6 +8,8 @@ public class OrderLine {
     private int quantity;
     private double total;
 
+    private int orderId;
+
     /**
      * Parameter Constructor
      * @param  - OrderLine ID
@@ -71,6 +73,14 @@ public class OrderLine {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public int getOrderId() {
+        return orderId;
     }
 
     public int getId() {

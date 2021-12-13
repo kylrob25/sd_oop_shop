@@ -1,10 +1,7 @@
 package me.krob.storage;
 
 import me.krob.model.product.Product;
-import me.krob.storage.dao.CustomerDAO;
-import me.krob.storage.dao.OrderDAO;
-import me.krob.storage.dao.ProductDAO;
-import me.krob.storage.dao.StaffDAO;
+import me.krob.storage.dao.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,6 +15,7 @@ public class DatabaseManager {
     private final StaffDAO staffDAO = new StaffDAO(this);
     private final ProductDAO productDAO = new ProductDAO(this);
     private final OrderDAO orderDAO = new OrderDAO(this);
+    private final OrderLineDAO orderLineDAO = new OrderLineDAO(this);
 
     /**
      * Loading UCanAccess Driver
@@ -39,6 +37,8 @@ public class DatabaseManager {
         customerDAO.load();
         staffDAO.load();
         productDAO.load();
+        orderDAO.load();
+        orderLineDAO.load();
     }
 
     /**
@@ -80,5 +80,13 @@ public class DatabaseManager {
      */
     public OrderDAO getOrderDAO() {
         return orderDAO;
+    }
+
+    /**
+     * OrderLine DAO
+     * @return - the order line dao
+     */
+    public OrderLineDAO getOrderLineDAO() {
+        return orderLineDAO;
     }
 }

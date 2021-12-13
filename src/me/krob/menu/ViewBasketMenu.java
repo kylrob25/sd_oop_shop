@@ -4,7 +4,9 @@ import me.krob.Main;
 import me.krob.model.order.Order;
 import me.krob.model.order.OrderLine;
 import me.krob.model.product.Product;
+import me.krob.storage.DatabaseManager;
 import me.krob.storage.dao.OrderDAO;
+import me.krob.storage.dao.OrderLineDAO;
 import me.krob.util.TableUtil;
 import me.krob.util.model.BasketTableModel;
 
@@ -130,11 +132,15 @@ public class ViewBasketMenu extends Menu {
             order.updateDate(System.currentTimeMillis());
             order.setStatus("Complete");
 
-            OrderDAO orderDAO = main.getDatabaseManager().getOrderDAO();
+            DatabaseManager databaseManager = main.getDatabaseManager();
+            OrderDAO orderDAO = databaseManager.getOrderDAO();
             if (!orderDAO.insert(order)) {
                 updateDisplay("Failed to purchase!");
                 return;
             }
+
+            OrderLineDAO orderLineDAO = databaseManager.getOrderLineDAO();
+            order.getLines().forEach(orderLineDAO::insert);
 
             createConfirmationPage(order);
         });
