@@ -6,12 +6,13 @@ import me.krob.model.user.User;
 import java.util.*;
 
 public class UserSession {
+    private final LinkedList<Order> orders = new LinkedList<>();
+
     private User user;
-    private LinkedList<Order> orders;
 
     public void clear() {
         user = null;
-        orders = null;
+        orders.clear();
     }
 
     public void setUser(User user) {
@@ -19,8 +20,7 @@ public class UserSession {
     }
 
     public void setOrders(LinkedList<Order> orders) {
-        this.orders = orders;
-        orders.sort(Collections.reverseOrder(Comparator.comparing(Order::getDate)));
+        orders.forEach(this.orders::addFirst);
     }
 
     public LinkedList<Order> getOrders() {

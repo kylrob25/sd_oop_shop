@@ -39,7 +39,6 @@ public class OrderLineDAO extends DAO<Integer, OrderLine> {
                     }
 
                     OrderLine line = new OrderLine(id, product, quantity, total);
-                    System.out.println("LineID: " + id);
                     line.setOrderId(orderId);
 
                     dataMap.put(id, line);
