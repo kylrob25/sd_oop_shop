@@ -22,6 +22,7 @@ public class Main {
     private final ModifyProductsMenu modifyProductsMenu;
     private final RegistrationMenu registrationMenu;
     private final EditProductMenu editProductMenu;
+    private final ViewOrdersMenu viewOrdersMenu;
 
     private final CategoryListModel categoryListModel;
 
@@ -45,6 +46,7 @@ public class Main {
         modifyProductsMenu = new ModifyProductsMenu(this);
         registrationMenu = new RegistrationMenu(this);
         editProductMenu = new EditProductMenu(this);
+        viewOrdersMenu = new ViewOrdersMenu(this);
     }
 
     public UserSession getUserSession() {
@@ -93,5 +95,9 @@ public class Main {
 
     public EditProductMenu getEditProductMenu() {
         return editProductMenu;
+    }
+
+    public ViewOrdersMenu getViewOrdersMenu() {
+        return viewOrdersMenu;
     }
 }

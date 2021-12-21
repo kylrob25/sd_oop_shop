@@ -12,12 +12,8 @@ import me.krob.util.TableUtil;
 import me.krob.util.model.BasketTableModel;
 
 import javax.swing.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 public class ViewBasketMenu extends Menu {
-    private static final ScheduledExecutorService SERVICE = Executors.newSingleThreadScheduledExecutor();
-
     private static final String CONFIRMATION =
             "<html> " +
             "Thank you for your purchase %s! <br>" +

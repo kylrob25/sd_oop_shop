@@ -4,10 +4,7 @@ import me.krob.model.order.Order;
 import me.krob.storage.DAO;
 import me.krob.storage.DatabaseManager;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class OrderDAO extends DAO<Integer, Order> {
 
@@ -15,8 +12,32 @@ public class OrderDAO extends DAO<Integer, Order> {
         super(manager);
     }
 
+    /**
+     * Filling our data map
+     */
     public void load() {
+        // Auto-closing our connection by using a try statement
+        try (Connection connection = manager.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Orders")) {
 
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("OrderId");
+                    Date date = new Date(resultSet.getTimestamp("OrderDate").getTime());
+                    String username = resultSet.getString("Username");
+                    double total = resultSet.getDouble("OrderTotal");
+                    String status = resultSet.getString("Status");
+
+                    // Creating and storing a new customer in our data map
+                    Order order = new Order(id, date, total, status);
+                    order.setUsername(username);
+
+                    dataMap.put(id, order);
+                }
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
     }
 
     /**
@@ -40,7 +61,10 @@ public class OrderDAO extends DAO<Integer, Order> {
                 try (ResultSet resultSet = statement.getGeneratedKeys()) {
                     if (resultSet.next()) {
                         int orderId = resultSet.getInt(1);
-                        order.getLines().forEach(line -> line.setOrderId(orderId));
+
+                        order.setId(orderId); // Setting the proper ID
+                        order.getLines().forEach(line -> line.setOrderId(orderId)); // Setting the ID for each line
+                        dataMap.put(orderId, order); // Storing our order
                     }
                 }
                 return true;

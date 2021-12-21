@@ -23,6 +23,12 @@ public class CustomerHomeMenu extends HomeMenu {
             // Show browse products menu
             main.getBrowseProductsMenu().view();
         });
+
+        viewOrdersButton.addActionListener(e -> {
+            dispose();
+
+            main.getViewOrdersMenu().view();
+        });
     }
 
     public void setGreetingText(String text) {
