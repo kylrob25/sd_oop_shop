@@ -18,16 +18,13 @@ public class CustomerHomeMenu extends HomeMenu {
         logoutButton.addActionListener(e -> logout());
 
         browseProductsButton.addActionListener(e -> {
-            // Hide menu
-            dispose();
-            // Show browse products menu
-            main.getBrowseProductsMenu().view();
+            dispose(); // Hiding menu
+            main.getBrowseProductsMenu().view(); // Showing products menu
         });
 
         viewOrdersButton.addActionListener(e -> {
-            dispose();
-
-            main.getViewOrdersMenu().view();
+            dispose(); // Hiding menu
+            main.getViewOrdersMenu().view(); // Showing orders menu
         });
     }
 

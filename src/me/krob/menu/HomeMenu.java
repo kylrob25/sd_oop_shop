@@ -4,6 +4,7 @@ import me.krob.Main;
 import me.krob.model.user.User;
 import me.krob.session.UserSession;
 
+import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 public abstract class HomeMenu extends Menu {
@@ -17,7 +18,7 @@ public abstract class HomeMenu extends Menu {
         session.setUser(user); // Setting user
         session.setOrders(main.getDatabaseManager().getOrderDAO().getValues()
                 .stream().filter(order -> order.getUsername().equals(session.getUsername()))
-                .collect(Collectors.toList())); // Setting orders
+                .collect(Collectors.toCollection(LinkedList::new))); // Setting orders
 
         setGreetingText(user.getDisplayGreeting()); // Setting greeting label
         setVisible(true); // Showing Menu

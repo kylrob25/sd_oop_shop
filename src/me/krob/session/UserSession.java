@@ -3,11 +3,11 @@ package me.krob.session;
 import me.krob.model.order.Order;
 import me.krob.model.user.User;
 
-import java.util.List;
+import java.util.*;
 
 public class UserSession {
     private User user;
-    private List<Order> orders;
+    private LinkedList<Order> orders;
 
     public void clear() {
         user = null;
@@ -18,11 +18,12 @@ public class UserSession {
         this.user = user;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(LinkedList<Order> orders) {
         this.orders = orders;
+        orders.sort(Collections.reverseOrder(Comparator.comparing(Order::getDate)));
     }
 
-    public List<Order> getOrders() {
+    public LinkedList<Order> getOrders() {
         return orders;
     }
 

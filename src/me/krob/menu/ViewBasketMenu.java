@@ -136,6 +136,8 @@ public class ViewBasketMenu extends Menu {
                 return;
             }
 
+            main.getUserSession().getOrders().addFirst(order);
+
             OrderLineDAO orderLineDAO = databaseManager.getOrderLineDAO();
             ProductDAO productDAO = databaseManager.getProductDAO();
 
@@ -163,14 +165,9 @@ public class ViewBasketMenu extends Menu {
         JLabel label = new JLabel(String.format(CONFIRMATION, order.getUsername(), order.getDate(), order.getTotal()));
         JOptionPane.showMessageDialog(null, label, "Order Confirmation", JOptionPane.INFORMATION_MESSAGE);
 
-        // Hide this
-        dispose();
-
-        // Clean up
-        main.getBrowseProductsMenu().clearOrder();
-
-        // Show home menu
-        main.getCustomerHomeMenu().setVisible(true);
+        dispose(); // Hide this
+        main.getBrowseProductsMenu().clearOrder(); // Clean up
+        main.getCustomerHomeMenu().setVisible(true); // Show home menu
     }
 
     public void updateTotal(Order order) {

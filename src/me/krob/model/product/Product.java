@@ -1,7 +1,5 @@
 package me.krob.model.product;
 
-import me.krob.model.order.OrderLine;
-
 public class Product {
     private int id;
     private String name;

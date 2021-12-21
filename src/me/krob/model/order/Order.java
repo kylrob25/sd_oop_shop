@@ -44,9 +44,16 @@ public class Order {
     public Order(int id, Date date, double total, String status) {
         this(date);
 
+        lines = new HashMap<>();
+        lineIndex = new ArrayList<>();
+
         this.id = id;
         this.total = total;
         this.status = status;
+    }
+
+    public Order clone() {
+        return new Order(id, date, total, status);
     }
 
     /**
@@ -91,24 +98,32 @@ public class Order {
         found.addQuantity(quantity);
     }
 
+    public void addOrderLine(OrderLine line, boolean createId) {
+        int id = line.getId();
+
+        if (createId) {
+            id = 0;
+
+            // If the id exists we increment the id to ensure it is unique
+            while (lines.containsKey(id)) {
+                id++;
+            }
+
+            // Setting the new id
+            line.setId(id);
+        }
+
+        // Storing the line
+        lines.put(id, line);
+        lineIndex.add(line);
+    }
+
     /**
      * Add a line to the order
      * @param line - the line to be added
      */
     public void addOrderLine(OrderLine line) {
-        int id = 0;
-
-        // If the id exists we increment the id to ensure it is unique
-        while (lines.containsKey(id)) {
-            id++;
-        }
-
-        // Setting the new id
-        line.setId(id);
-
-        // Storing the line
-        lines.put(id, line);
-        lineIndex.add(line);
+        addOrderLine(line, true);
     }
 
     /**

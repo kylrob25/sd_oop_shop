@@ -7,8 +7,6 @@ import javax.swing.table.AbstractTableModel;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class OrderTableModel extends AbstractTableModel {
@@ -19,10 +17,10 @@ public class OrderTableModel extends AbstractTableModel {
 
     private final List<Order> orders = new ArrayList<>();
 
-    public void loadOrders(UserSession session) {
-        orders.clear();
+    public List<Order> loadOrders(UserSession session) {
+        orders.clear(); // Clearing orders
         orders.addAll(session.getOrders()); // Adding our orders
-        orders.sort(Collections.reverseOrder(Comparator.comparing(Order::getDate))); // Ensuring the last is the first
+        return orders;
     }
 
     @Override
