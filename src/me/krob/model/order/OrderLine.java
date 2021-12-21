@@ -44,6 +44,21 @@ public class OrderLine {
     }
 
     /**
+     * Returns stock a product
+     */
+    public void returnProduct() {
+        returnProduct(quantity);
+    }
+
+    /**
+     * Returns stock to a product
+     * @param quantity - the stock to be returned
+     */
+    public void returnProduct(int quantity) {
+        product.addStock(quantity);
+    }
+
+    /**
      * Removing quantity and updating total
      * @param quantity - amount to remove
      */

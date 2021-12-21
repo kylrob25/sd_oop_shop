@@ -7,8 +7,7 @@ import me.krob.model.product.Product;
 import me.krob.session.UserSession;
 
 import javax.swing.*;
-import java.awt.*;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 public class BrowseProductsMenu extends Menu {
     private JPanel mainPanel;
@@ -58,14 +57,9 @@ public class BrowseProductsMenu extends Menu {
                         "Are you sure? Your basket will be cleared!", "Warning!", JOptionPane.YES_NO_OPTION);
 
                 if (result == JOptionPane.YES_OPTION) {
-                    // Hiding menu
-                    dispose();
-
-                    // Showing the customer menu
-                    main.getCustomerHomeMenu().setVisible(true);
-
-                    // Clearing the order
-                    clearOrder();
+                    dispose(); // Hiding menu
+                    main.getCustomerHomeMenu().setVisible(true); // Showing customer menu
+                    clearOrder(); // Clearing the order
                 }
             } else {
                 // Hiding menu
@@ -147,9 +141,9 @@ public class BrowseProductsMenu extends Menu {
     }
 
     public void clearOrder() {
-        // This isn't really needed as the GC will get it but we may aswell
-        order = null;
-        basketMenu = null;
+        order.getLines().forEach(OrderLine::returnProduct); // Returning stock
+        order = null; // Nulling our order
+        basketMenu = null; // Nulling our basket
     }
 
     public void updateProductListModel() {

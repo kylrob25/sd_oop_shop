@@ -111,7 +111,7 @@ public class ViewBasketMenu extends Menu {
             main.getBrowseProductsMenu().getQuantityField().setValue(product.getStockLevel());
 
             // Returning the stock
-            product.increaseStockLevel(amountToRemove);
+            line.returnProduct(amountToRemove);
 
             // Updating model
             basketTable.repaint();

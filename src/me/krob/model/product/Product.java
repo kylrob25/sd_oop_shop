@@ -1,5 +1,7 @@
 package me.krob.model.product;
 
+import me.krob.model.order.OrderLine;
+
 public class Product {
     private int id;
     private String name;
@@ -50,8 +52,12 @@ public class Product {
         this.price = price;
     }
 
-    public void increaseStockLevel(int amount) {
-        stockLevel += amount;
+    public void addStock(int stock) {
+        stockLevel += stock;
+    }
+
+    public void removeStock(int stock) {
+        stockLevel -= stock;
     }
 
     public void setStockLevel(int stockLevel) {
