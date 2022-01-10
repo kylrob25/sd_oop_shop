@@ -7,7 +7,6 @@ import me.krob.model.product.Product;
 import me.krob.session.UserSession;
 
 import javax.swing.*;
-import java.util.List;
 
 public class BrowseProductsMenu extends Menu {
     private JPanel mainPanel;
@@ -140,13 +139,21 @@ public class BrowseProductsMenu extends Menu {
         });
     }
 
+    public void completeOrder() {
+        clearOrder(false);
+    }
+
     public void clearOrder() {
-        order.getLines().forEach(OrderLine::returnProduct); // Returning stock
+        clearOrder(true);
+    }
+
+    private void clearOrder(boolean stock) {
+        if (stock) order.getLines().forEach(OrderLine::returnProduct); // Returning stock
         order = null; // Nulling our order
         basketMenu = null; // Nulling our basket
     }
 
-    public void updateProductListModel() {
+    private void updateProductListModel() {
         DefaultListModel<Product> model = (DefaultListModel<Product>) productsList.getModel();
         String selectedValue = categoryList.getSelectedValue();
 

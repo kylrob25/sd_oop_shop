@@ -36,14 +36,14 @@ public class ViewOrdersMenu extends Menu {
             Order order = main.getUserSession().getOrders().get(row);
 
             if (order != null) {
-                Order cloned = order.clone();
+                Order cloned = order.clone(); // Temp clone
 
                 OrderLineDAO orderLineDAO = main.getDatabaseManager().getOrderLineDAO();
                 orderLineDAO.getValues().stream()
                         .filter(line -> line.getOrderId() == cloned.getId())
-                        .forEach(line -> cloned.addOrderLine(line, false));
+                        .forEach(line -> cloned.addOrderLine(line, false)); // Adding lines to the clone
 
-                new ViewOrderMenu(main, cloned).setVisible(true);
+                new ViewOrderMenu(main, cloned).setVisible(true); // Showing order
             }
         });
     }

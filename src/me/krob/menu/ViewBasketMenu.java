@@ -166,7 +166,7 @@ public class ViewBasketMenu extends Menu {
         JOptionPane.showMessageDialog(null, label, "Order Confirmation", JOptionPane.INFORMATION_MESSAGE);
 
         dispose(); // Hide this
-        main.getBrowseProductsMenu().clearOrder(); // Clean up
+        main.getBrowseProductsMenu().completeOrder(); // Clean up
         main.getCustomerHomeMenu().setVisible(true); // Show home menu
     }
 
