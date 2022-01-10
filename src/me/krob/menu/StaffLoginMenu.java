@@ -55,7 +55,7 @@ public class StaffLoginMenu extends Menu {
             dispose();
 
             // Showing staff home menu
-            main.getStaffHomeMenu().login(staff);
+            main.getStaffHomeMenu().staffLogin(staff);
         });
     }
 

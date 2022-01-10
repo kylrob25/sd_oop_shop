@@ -24,6 +24,11 @@ public class StaffHomeMenu extends HomeMenu {
             // Showing modify products menu
             main.getModifyProductsMenu().setVisible(true);
         });
+
+        viewOrdersButton.addActionListener(e -> {
+            dispose();
+            main.getViewOrdersMenu().view();
+        });
     }
 
     public void setGreetingText(String text) {

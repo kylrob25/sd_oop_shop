@@ -2,24 +2,32 @@ package me.krob.util.model;
 
 import me.krob.model.order.Order;
 import me.krob.session.UserSession;
+import me.krob.storage.dao.OrderDAO;
 
 import javax.swing.table.AbstractTableModel;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderTableModel extends AbstractTableModel {
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    private static final DateFormat DATE_FORMAT = DateFormat.getInstance();
 
-    private static final String[] COLUMN_NAMES = {"ID", "Date", "Price", "Status"};
-    private static final Class<?>[] COLUMN_CLASS = {Integer.class, String.class, Double.class, String.class};
+    private static final String[] COLUMN_NAMES = {"ID", "Customer", "Date", "Price"};
+    private static final Class<?>[] COLUMN_CLASS = {Integer.class, String.class, String.class, Double.class};
 
     private final List<Order> orders = new ArrayList<>();
 
-    public List<Order> loadOrders(UserSession session) {
+    public void loadOrders(UserSession session) {
         orders.clear(); // Clearing orders
         orders.addAll(session.getOrders()); // Adding our orders
+    }
+
+    public void loadAllOrders(OrderDAO orderDAO) {
+        orders.clear();
+        orders.addAll(orderDAO.getValues());
+    }
+
+    public List<Order> getOrders() {
         return orders;
     }
 
@@ -53,11 +61,11 @@ public class OrderTableModel extends AbstractTableModel {
                     case 0:
                         return order.getId();
                     case 1:
-                        return DateFormat.getInstance().format(order.getDate());
+                        return order.getUsername();
                     case 2:
-                        return String.format("£%.2f", order.getTotal());
+                        return DATE_FORMAT.format(order.getDate());
                     case 3:
-                        return order.getStatus();
+                        return String.format("£%.2f", order.getTotal());
                 }
             }
         }

@@ -9,14 +9,20 @@ public class UserSession {
     private final LinkedList<Order> orders = new LinkedList<>();
 
     private User user;
+    private boolean staff;
 
     public void clear() {
         user = null;
+        staff = false;
         orders.clear();
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setStaff(boolean staff) {
+        this.staff = staff;
     }
 
     public void setOrders(LinkedList<Order> orders) {
@@ -33,5 +39,9 @@ public class UserSession {
 
     public boolean isActive() {
         return user != null;
+    }
+
+    public boolean isStaff() {
+        return staff;
     }
 }

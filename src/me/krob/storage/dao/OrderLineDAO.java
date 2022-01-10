@@ -1,15 +1,17 @@
 package me.krob.storage.dao;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
-import me.krob.model.order.Order;
 import me.krob.model.order.OrderLine;
 import me.krob.model.product.Product;
 import me.krob.storage.DAO;
 import me.krob.storage.DatabaseManager;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderLineDAO extends DAO<Integer, OrderLine> {
+
+    private final List<OrderLine> lines = new ArrayList<>();
 
     public OrderLineDAO(DatabaseManager manager) {
         super(manager);
@@ -42,6 +44,7 @@ public class OrderLineDAO extends DAO<Integer, OrderLine> {
                     line.setOrderId(orderId);
 
                     dataMap.put(id, line);
+                    lines.add(line);
                 }
             }
         } catch (SQLException exception) {
@@ -67,6 +70,8 @@ public class OrderLineDAO extends DAO<Integer, OrderLine> {
             statement.setInt(5, line.getOrderId());
 
             if (!statement.execute()) {
+                dataMap.put(lineId, line);
+                lines.add(line);
                 return true;
             }
 
@@ -84,5 +89,21 @@ public class OrderLineDAO extends DAO<Integer, OrderLine> {
 
     public boolean delete(Integer key) {
         return false;
+    }
+
+    public boolean isEmpty() {
+        return lines.isEmpty();
+    }
+
+    public List<OrderLine> getLines() {
+        return lines;
+    }
+
+    public OrderLine getLineByIndex(int index) {
+        return lines.get(index);
+    }
+
+    public int getLineCount() {
+        return lines.size();
     }
 }
