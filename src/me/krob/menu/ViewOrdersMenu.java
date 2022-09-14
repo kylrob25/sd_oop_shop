@@ -39,6 +39,11 @@ public class ViewOrdersMenu extends Menu {
 
         viewSelectedButton.addActionListener(e -> {
             int row = orderTable.getSelectedRow();
+
+            if (row == -1) {
+                return;
+            }
+
             Order order = MODEL.getOrders().get(row);
 
             if (order != null) {

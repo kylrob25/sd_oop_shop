@@ -1,6 +1,7 @@
 package me.krob.menu;
 
 import me.krob.Main;
+import me.krob.session.UserSession;
 
 import javax.swing.*;
 
@@ -10,6 +11,7 @@ public class StaffHomeMenu extends HomeMenu {
     private JButton viewOrdersButton;
     private JButton logoutButton;
     private JLabel greetingLabel;
+    private JLabel displayLabel;
 
     public StaffHomeMenu(Main main) {
         super("Staff Home", main);
@@ -26,6 +28,13 @@ public class StaffHomeMenu extends HomeMenu {
         });
 
         viewOrdersButton.addActionListener(e -> {
+            UserSession session = main.getUserSession();
+
+            if (session.getOrders().isEmpty()) {
+                updateDisplay("There are no viewable orders.");
+                return;
+            }
+
             dispose();
             main.getViewOrdersMenu().view();
         });
@@ -36,6 +45,6 @@ public class StaffHomeMenu extends HomeMenu {
     }
 
     public JLabel getDisplayLabel() {
-        return null;
+        return displayLabel;
     }
 }
