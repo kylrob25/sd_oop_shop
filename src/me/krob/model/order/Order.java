@@ -12,7 +12,8 @@ public class Order {
     private double total;
     private String status;
     private Map<Integer, OrderLine> lines;
-    private List<OrderLine> lineIndex;
+    private List<OrderLine> lineByIndex;
+    private Map<Integer, OrderLine> lineByProductId;
 
     private String username;
 
@@ -30,7 +31,8 @@ public class Order {
     public Order() {
         this(new Date(System.currentTimeMillis()));
         lines = new HashMap<>();
-        lineIndex = new ArrayList<>();
+        lineByIndex = new ArrayList<>();
+        lineByProductId = new HashMap<>();
         status = "In Progress";
     }
 
@@ -45,7 +47,8 @@ public class Order {
         this(date);
 
         lines = new HashMap<>();
-        lineIndex = new ArrayList<>();
+        lineByIndex = new ArrayList<>();
+        lineByProductId = new HashMap<>();
 
         this.id = id;
         this.total = total;
@@ -61,7 +64,7 @@ public class Order {
      * @return - the newly calculated total
      */
     public double calculateTotal() {
-        return total = lineIndex.stream().mapToDouble(OrderLine::getTotal).sum();
+        return total = lineByIndex.stream().mapToDouble(OrderLine::getTotal).sum();
     }
 
     /**
@@ -70,6 +73,8 @@ public class Order {
      * @return - the found line
      */
     public OrderLine hasProduct(OrderLine line) {
+        return lineByProductId.get(line.getProduct().getId());
+        /*
         int productId = line.getProduct().getId();
 
         for (OrderLine orderLine: lineIndex) {
@@ -78,6 +83,7 @@ public class Order {
             }
         }
         return null;
+         */
     }
 
     /**
@@ -115,7 +121,8 @@ public class Order {
 
         // Storing the line
         lines.put(id, line);
-        lineIndex.add(line);
+        lineByIndex.add(line);
+        lineByProductId.put(line.getProduct().getId(), line);
     }
 
     /**
@@ -132,7 +139,8 @@ public class Order {
      */
     public void removeOrderLine(OrderLine line) {
         lines.remove(line.getId());
-        lineIndex.remove(line);
+        lineByIndex.remove(line);
+        lineByProductId.remove(line.getProduct().getId());
     }
 
     public void setId(int id) {
@@ -184,11 +192,11 @@ public class Order {
     }
 
     public List<OrderLine> getLines() {
-        return lineIndex;
+        return lineByIndex;
     }
 
     public OrderLine getLineByIndex(int index) {
-        return lineIndex.get(index);
+        return lineByIndex.get(index);
     }
 
     public OrderLine getLine(int id) {
@@ -196,11 +204,11 @@ public class Order {
     }
 
     public int getLineCount() {
-        return lineIndex.size();
+        return lineByIndex.size();
     }
 
     public boolean isEmpty() {
-        return lineIndex.isEmpty();
+        return lineByIndex.isEmpty();
     }
 
     public String getUsername() {

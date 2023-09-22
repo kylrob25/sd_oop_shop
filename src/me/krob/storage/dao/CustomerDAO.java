@@ -37,6 +37,7 @@ public class CustomerDAO extends DAO<String, Customer> {
                     Customer customer = new Customer(username, password, firstName,
                             lastName, addressLine1, addressLine2, town, postcode, true);
                     dataMap.put(username, customer);
+                    System.out.println(username + " " + password);
                 }
             }
         } catch (SQLException exception) {
